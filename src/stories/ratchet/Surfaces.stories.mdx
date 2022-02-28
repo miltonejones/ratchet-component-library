@@ -1,0 +1,61 @@
+import { Canvas, Meta, Story, ArgsTable } from "@storybook/addon-docs";
+import {
+  Typography,
+  Stack,
+  Frame,
+  Box,
+  Button,
+  Card,
+  Divider,
+} from "../../components/UI/UI.js";
+
+<Meta title="Components/SURFACES" />
+
+export const ComingSoonTemplate = (args) => <ComingSoonStory {...args} />;
+
+# Card
+
+Cards contain content and actions about a single subject.
+
+Cards are surfaces that display content and actions on a single topic.
+
+They should be easy to scan for relevant and actionable information. Elements, like text and images, should be placed on them in a way that clearly indicates hierarchy.
+
+Basic card
+Although cards can support multiple actions, UI controls, and an overflow menu, use restraint and remember that cards are entry points to more complex and detailed information.
+
+<Canvas>
+  <Story name="Card">
+    <Card sx={{ maxWidth: 300 }}>
+      <Typography variant="caption" mb={4}>
+        Word of the Day
+      </Typography>
+      <Typography className="bold" mb={4} variant="body1">
+        rat &bull; chet
+      </Typography>
+      <Typography variant="subtitle1" mb={4}>
+        one who is dirty, low class, no moral values and place themselves in a
+        situation of being known in a negative way.
+      </Typography>
+      <Divider />
+      <Button variant="filled">learn more</Button>
+    </Card>
+  </Story>
+</Canvas>
+
+```jsx
+<Card sx={{ maxWidth: 300 }}>
+  <Typography variant="caption" mb={4}>
+    Word of the Day
+  </Typography>
+  <Typography className="bold" mb={4} variant="body1">
+    rat &bull; chet
+  </Typography>
+  <Typography variant="subtitle1" mb={4}>
+    one who is dirty, low class, no moral values and place themselves in a
+    situation of being known in a negative way.
+  </Typography>
+  <Divider />
+  <Button variant="filled">learn more</Button>
+</Card>
+```

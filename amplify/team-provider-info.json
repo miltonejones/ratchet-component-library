@@ -1,0 +1,23 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-ratchetcomponentlibr-dev-40427-authRole",
+      "UnauthRoleArn": "arn:aws:iam::123823813021:role/amplify-ratchetcomponentlibr-dev-40427-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::123823813021:role/amplify-ratchetcomponentlibr-dev-40427-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-ratchetcomponentlibr-dev-40427-deployment",
+      "UnauthRoleName": "amplify-ratchetcomponentlibr-dev-40427-unauthRole",
+      "StackName": "amplify-ratchetcomponentlibr-dev-40427",
+      "StackId": "arn:aws:cloudformation:us-east-1:123823813021:stack/amplify-ratchetcomponentlibr-dev-40427/ac92ebe0-97b4-11ec-b8aa-12d0a8c749c7",
+      "AmplifyAppId": "digeb9dt451i"
+    },
+    "categories": {
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "digeb9dt451i",
+          "type": "manual"
+        }
+      }
+    }
+  }
+}

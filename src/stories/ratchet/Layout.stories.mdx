@@ -1,0 +1,100 @@
+import { Canvas, Meta, Story, ArgsTable } from "@storybook/addon-docs";
+import {
+  Flex,
+  Stack,
+  Frame,
+  Box,
+  Button,
+  Spacer,
+} from "../../components/UI/UI.js";
+import ComingSoonStory from "./ComingSoonStory.js";
+
+<Meta title="Components/LAYOUT" />
+
+export const ComingSoonTemplate = (args) => <ComingSoonStory {...args} />;
+
+# Box
+
+The Box component serves as a wrapper component for most of the CSS utility needs.
+
+<Canvas>
+  <Story name="Box" parameters={{ layout: "fullscreen" }}>
+    <Box p={4} sx={{ border: "1px dashed grey", width: "fit-content" }}>
+      <Button>Save</Button>
+    </Box>
+  </Story>
+</Canvas>
+
+```jsx
+<Box p={4} sx={{ border: "1px dashed grey", width: "fit-content" }}>
+  <Button>Save</Button>
+</Box>
+```
+
+# Stack
+
+The Stack component manages layout of immediate children along the vertical or horizontal
+axis with optional spacing and/or dividers between each child.
+
+<Canvas>
+  <Story name="Stack" parameters={{ layout: "fullscreen" }}>
+    <Stack spacing={2}>
+      <Box>Item 1</Box>
+      <Box>Item 2</Box>
+      <Box>Item 3</Box>
+    </Stack>
+  </Story>
+</Canvas>
+
+```jsx
+<Stack spacing={2}>
+  <Box>Item 1</Box>
+  <Box>Item 2</Box>
+  <Box>Item 3</Box>
+</Stack>
+```
+
+# Grid
+
+The Material Design responsive layout grid adapts to screen size and orientation, ensuring consistency
+across layouts.
+
+<Canvas>
+  <Story name="Grid" parameters={{ layout: "fullscreen" }}>
+    {ComingSoonTemplate.bind({})}
+  </Story>
+</Canvas>
+
+# Flex
+
+Flex is Box with display: flex and comes with helpful style shorthand. It renders a div element.
+
+## Using the Spacer
+
+As an alternative to Stack, you can combine Flex and Spacer to create stackable and responsive layouts.
+
+<Canvas>
+  <Story name="Flex" parameters={{ layout: "fullscreen" }}>
+    <Flex>
+      <Box p="4" bg="red">
+        Box 1
+      </Box>
+      <Spacer />
+      <Box p="4" bg="green">
+        Box 2
+      </Box>
+    </Flex>
+  </Story>
+</Canvas>
+
+```jsx
+<Flex>
+  <Box p="4" bg="red">
+    Box 1
+  </Box>
+  <Spacer />
+  <Box p="4" bg="green">
+    Box 2
+  </Box>
+</Flex>
+```

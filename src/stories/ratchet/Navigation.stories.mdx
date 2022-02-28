@@ -1,0 +1,68 @@
+import { Canvas, Meta, Story, ArgsTable } from "@storybook/addon-docs";
+import { Flex, Stack, Frame, Box } from "../../components/UI/UI.js";
+import MenuStory from "./MenuStory.js";
+import ComingSoonStory from "./ComingSoonStory.js";
+
+<Meta title="Components/NAVIGATION" />
+
+export const ComingSoonTemplate = (args) => <ComingSoonStory {...args} />;
+export const MenuTemplate = (args) => <MenuStory {...args} />;
+
+# Menu
+
+Menus display a list of choices on temporary surfaces.
+
+## Basic menu
+
+A basic menu opens over the anchor element by default (this option can be changed via props).
+When close to a screen edge, a basic menu vertically realigns to make sure that all menu items are completely visible.
+
+Choosing an option should immediately ideally commit the option and close the menu.
+
+<Canvas>
+  <Story name="Menu" parameters={{ layout: "fullscreen" }}>
+    {MenuTemplate.bind({})}
+  </Story>
+</Canvas>
+
+```jsx
+<Menu
+  onChange={(e) => alert(options[e])}
+  button={<Button>dashboard</Button>}
+  options={options.map((b) => (
+    <Box p={1} key={b}>
+      {b}
+    </Box>
+  ))}
+/>
+```
+
+# Bottom Navigation
+
+Bottom navigation bars allow movement between primary destinations in an app.
+
+<Canvas>
+  <Story name="Bottom Navigation" parameters={{ layout: "fullscreen" }}>
+    {ComingSoonTemplate.bind({})}
+  </Story>
+</Canvas>
+
+# Drawer
+
+Navigation drawers provide access to destinations in your app. Side sheets are surfaces containing supplementary content that are anchored to the left or right edge of the screen.
+
+<Canvas>
+  <Story name="Drawer" parameters={{ layout: "fullscreen" }}>
+    {ComingSoonTemplate.bind({})}
+  </Story>
+</Canvas>
+
+# Pagination
+
+The Pagination component enables the user to select a specific page from a range of pages.
+
+<Canvas>
+  <Story name="Pagination" parameters={{ layout: "fullscreen" }}>
+    {ComingSoonTemplate.bind({})}
+  </Story>
+</Canvas>

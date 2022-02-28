@@ -1,0 +1,16 @@
+{
+  "ml": "marginLeft",
+  "mr": "marginRight",
+  "mb": "marginBottom",
+  "mt": "marginTop",
+  "pl": "paddingLeft",
+  "pr": "paddingRight",
+  "pb": "paddingBottom",
+  "pt": "paddingTop",
+  "p": "padding",
+  "m": "margin",
+  "w": "width",
+  "bg": "background",
+  "flex": "flexGrow",
+  "spacing": "gap"
+}

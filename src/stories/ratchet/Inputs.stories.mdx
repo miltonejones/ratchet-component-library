@@ -1,0 +1,160 @@
+import { Canvas, Meta, Story, ArgsTable } from "@storybook/addon-docs";
+import {
+  Button,
+  Flex,
+  Select,
+  TextBox,
+  Switch,
+  Stack,
+  Center,
+  Typography,
+} from "../../components/UI/UI.js";
+
+<Meta title="Components/INPUTS" />
+
+# Button
+
+Buttons allow users to take actions, and make choices, with a single tap
+
+<Canvas>
+  <Story
+    name="Button"
+    argTypes={{
+      variant: {
+        control: "text",
+        defaultValue: "outlined",
+        description: "Sets the type of button to display",
+      },
+    }}
+  >
+    <Flex>
+      <Button id="Unchecked" variant="outlined" mr={2}>
+        button
+      </Button>
+      <Button id="Checked" variant="filled" mr={2}>
+        button
+      </Button>
+      <Button id="filled" variant="filled" color="secondary" mr={2}>
+        button
+      </Button>
+      <Button id="disabled" mr={2} color="info">
+        button
+      </Button>
+    </Flex>
+  </Story>
+</Canvas>
+
+```jsx
+<Button variant="filled">button</Button>
+```
+
+<ArgsTable story="Button" />
+
+# Text Field
+
+Text fields let users enter and edit text.
+
+<Canvas>
+  <Story
+    name="TextBox"
+    argTypes={{
+      value: {
+        control: "text",
+        defaultValue: "",
+        description: "Value of the TextBox  ",
+      },
+    }}
+  >
+    <Flex>
+      <TextBox placeholder="Basic TextBox" mr={2} />
+      <TextBox value="Populated TextBox" mr={2} />
+      <TextBox disabled value="Disabled TextBox" mr={2} />
+    </Flex>
+  </Story>
+</Canvas>
+
+```jsx
+<TextBox value="Populated TextBox" />
+```
+
+# Select
+
+Select components are used for collecting user provided information from a list of options.
+
+<Canvas>
+  <Story
+    name="Select"
+    argTypes={{
+      options: {
+        control: "text",
+        defaultValue: "peas, greens, potatoes, tomatoes, you name it!",
+        description: "Array of values to display",
+      },
+    }}
+  >
+    <Flex>
+      <Select options={["apples", "pears", "bananas", "world peace"]} mr={2} />
+    </Flex>
+  </Story>
+</Canvas>
+
+```jsx
+<Select options={["apples", "pears", "bananas", "world peace"]} />
+```
+
+<ArgsTable story="Select" />
+
+# Switch
+
+Switches toggle the state of a single setting on or off.
+
+<Canvas>
+  <Story
+    name="Switch"
+    argTypes={{
+      checked: {
+        control: "boolean",
+        defaultValue: false,
+        description: "Sets whether Switch is set to true or false",
+      },
+      color: {
+        control: "text",
+        defaultValue: "primary",
+        description: "Color of the Switch",
+      },
+    }}
+  >
+    <Flex>
+      <Stack align="center" mr={6}>
+        <Switch color="info" checked />
+        <Typography variant="caption">Info Switch</Typography>
+      </Stack>
+      <Stack align="center" mr={6}>
+        <Switch color="warning" checked />
+        <Typography variant="caption">Warning Switch</Typography>
+      </Stack>
+      <Stack align="center" mr={6}>
+        <Switch color="error" checked />
+        <Typography variant="caption">Error Switch</Typography>
+      </Stack>
+      <Stack align="center" mr={6}>
+        <Switch color="success" checked />
+        <Typography variant="caption">Success Switch</Typography>
+      </Stack>
+      <Stack align="center" mr={6}>
+        <Switch color="success" />
+        <Typography variant="caption">Unchecked Switch</Typography>
+      </Stack>
+      <Stack align="center" mr={6}>
+        <Switch color="success" disabled />
+        <Typography variant="caption">disabled Switch</Typography>
+      </Stack>
+    </Flex>
+  </Story>
+</Canvas>
+
+```jsx
+<Switch color="success" />
+```
+
+<ArgsTable story="Switch" />

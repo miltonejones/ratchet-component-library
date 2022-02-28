@@ -1,0 +1,170 @@
+import { Canvas, Meta, Story, ArgsTable } from "@storybook/addon-docs";
+import {
+  Flex,
+  Avatar,
+  Chip,
+  Divider,
+  List,
+  Typography,
+  Card,
+  Box,
+} from "../../components/UI/UI.js";
+
+import { AlertTriangle } from "../../icons";
+
+<Meta title="Components/DATA DISPLAY" />
+
+# Avatar
+
+Avatars are found throughout material design with uses in everything from tables to dialog menus.
+
+## Image avatars
+
+Image avatars can be created by passing standard img props src or srcSet to the component.
+
+<Canvas>
+  <Story
+    name="Avatar"
+    argTypes={{
+      variant: {
+        control: "text",
+        defaultValue: "outlined",
+        description: "Sets the type of avatar to display",
+      },
+      src: {
+        control: "text",
+        defaultValue:
+          "https://i1.sndcdn.com/avatars-1zPHz1m2uz0z1sj9-bIL9yg-t500x500.jpg",
+        description: "Image to display in the avatar",
+      },
+      alt: {
+        control: "text",
+        defaultValue: "",
+        description: "Text to display on hover",
+      },
+    }}
+  >
+    <Flex>
+      <Avatar
+        mr={2}
+        size="small"
+        id="Avatar1"
+        src="https://i1.sndcdn.com/avatars-1zPHz1m2uz0z1sj9-bIL9yg-t500x500.jpg"
+        variant="circle"
+      >
+        b
+      </Avatar>
+      <Avatar
+        mr={2}
+        size="medium"
+        id="Avatar2"
+        src="https://i1.sndcdn.com/avatars-1zPHz1m2uz0z1sj9-bIL9yg-t500x500.jpg"
+        variant="circle"
+      >
+        b
+      </Avatar>
+      <Avatar
+        mr={6}
+        size="large"
+        id="Avatar3"
+        src="https://i1.sndcdn.com/avatars-1zPHz1m2uz0z1sj9-bIL9yg-t500x500.jpg"
+        variant="circle"
+      >
+        b
+      </Avatar>
+      <Avatar mr={2} size="large" id="Avatar3" variant="circle">
+        b
+      </Avatar>
+    </Flex>
+  </Story>
+</Canvas>
+
+<ArgsTable story="Avatar" />
+
+# Chip
+
+Chips are compact elements that represent an input, attribute, or action.
+
+<Canvas>
+  <Story name="Chip">
+    <Flex>
+      <Chip mr={2} variant="outlined">
+        outlined chip
+      </Chip>
+      <Chip mr={2} variant="filled">
+        filled chip
+      </Chip>
+    </Flex>
+  </Story>
+</Canvas>
+
+# Divider
+
+A divider is a thin line that groups content in lists and layouts.
+
+<Canvas>
+  <Story name="Divider">
+    <Card style={{ maxWidth: 345 }}>
+      <Typography mr={2} variant="body1">
+        You know the question, just as I did...
+      </Typography>
+      <Divider />
+      <Typography mr={2} variant="caption">
+        What is the matrix?
+      </Typography>
+    </Card>
+  </Story>
+</Canvas>
+
+# Lists
+
+Lists are continuous, vertical indexes of text or images.
+
+## Basic List
+
+<Canvas>
+  <Story name="List">
+    <Flex>
+      <Card mr={6} style={{ minWidth: 245 }}>
+        <List
+          dense
+          items={[
+            <Flex sx={{ margin: 12 }} align="center">
+              <AlertTriangle /> <Box ml={2}>Inbox</Box>
+            </Flex>,
+            <Box sx={{ margin: 12 }}>Drafts</Box>,
+            <Divider />,
+            <Box sx={{ margin: 12 }}>Trash</Box>,
+            <Box sx={{ margin: 12 }}>Spam</Box>,
+          ]}
+        />
+      </Card>
+      <Card style={{ minWidth: 245 }}>
+        <List
+          items={["apples", "oranges", "peaches", "pears"].map((f) => (
+            <Box pt={2} pb={2}>
+              {f}
+            </Box>
+          ))}
+        />
+      </Card>
+    </Flex>
+  </Story>
+</Canvas>
+
+# Typography
+
+Use typography to present your design and content as clearly and efficiently as possible.
+
+<Canvas>
+  <Story name="Typography">
+    <Typography variant="h1">h1. Heading 1</Typography>
+    <Typography variant="h2">h2. Heading 2</Typography>
+    <Typography variant="h3">h3. Heading 3</Typography>
+    <Typography variant="body2">body2</Typography>
+    <Typography variant="subtitle1">subtitle1</Typography>
+    <Typography variant="subtitle2">subtitle2</Typography>
+    <Typography variant="caption">caption</Typography>
+    <Typography variant="button">button</Typography>
+  </Story>
+</Canvas>

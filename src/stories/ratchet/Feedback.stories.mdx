@@ -1,0 +1,148 @@
+import { Canvas, Meta, Story, ArgsTable } from "@storybook/addon-docs";
+import DialogStory from "./DialogStory.js";
+import SnackbarStory from "./SnackbarStory.js";
+import { Alert } from "../../components/UI/UI.js";
+
+<Meta title="Components/FEEDBACK" />
+
+export const DialogTemplate = (args) => <DialogStory {...args} />;
+export const SnackbarTemplate = (args) => <SnackbarStory {...args} />;
+
+# Alert
+
+An alert displays a short, important message
+in a way that attracts the user's attention without interrupting the user's task.
+
+<Canvas>
+  <Story
+    name="Alert"
+    argTypes={{
+      severity: {
+        control: "text",
+        defaultValue: "info",
+        description: "Sets the type of alert to display",
+      },
+      children: {
+        control: "text",
+        defaultValue: "",
+        description: "Content of the alert body",
+      },
+    }}
+  >
+    <Alert id="Info" severity="info" mb={2}>
+      This is an Info Alert.
+    </Alert>
+    <Alert id="Warning" severity="warning" mb={2}>
+      This is a Warning Alert.
+    </Alert>
+    <Alert id="Success" severity="success" mb={2}>
+      This is a Success Alert.
+    </Alert>
+    <Alert id="error" severity="error" mb={2}>
+      This is a Error Alert.
+    </Alert>
+  </Story>
+</Canvas>
+
+```jsx
+<Alert severity="warning">This is a Warning Alert.</Alert>
+```
+
+<ArgsTable story="Alert" />
+
+# Dialog
+
+Dialogs inform users about a task and can contain critical information, require decisions, or involve multiple tasks.
+
+<Canvas>
+  <Story
+    argTypes={{
+      open: {
+        control: "text",
+        defaultValue: "info",
+        description: "Sets whether Dialog is open",
+      },
+      width: {
+        control: "text",
+        defaultValue: "400px",
+        description: "Width of the dialog",
+      },
+      height: {
+        control: "text",
+        defaultValue: "200px",
+        description: "Height of the dialog",
+      },
+      onClose: {
+        control: "text",
+        defaultValue: "",
+        description:
+          "Method to call when dialog Backdrop is clicked or a Cancel action is taken.",
+      },
+      children: {
+        control: "text",
+        defaultValue: "",
+        description: "Dialog Content.",
+      },
+    }}
+    name="Dialog"
+    parameters={{ layout: "fullscreen" }}
+  >
+    {DialogTemplate.bind({})}
+  </Story>
+</Canvas>
+
+```jsx
+<Dialog onClose={() => setOpen(!open)} open={open}>
+  <Stack>
+    <Typography variant="h2">Some stuff in here</Typography>
+    <Divider />
+    <Typography variant="body1">Even more in here</Typography>
+    <Flex mt={16}>
+      <Spacer />
+      <Button mr={2}>Cancel</Button>
+      <Button variant="filled">Okay</Button>
+    </Flex>
+  </Stack>
+</Dialog>
+```
+
+## Dialog Properties
+
+<ArgsTable story="Dialog" />
+
+# Snackbar
+
+Snackbars provide brief notifications. The component is also known as a toast.
+
+<Canvas>
+  <Story
+    argTypes={{
+      open: {
+        control: "text",
+        defaultValue: "info",
+        description: "Sets whether Snackbar is open",
+      },
+      onClose: {
+        control: "text",
+        defaultValue: "",
+        description:
+          "Method to call when Snackbar Backdrop is clicked or a Cancel action is taken.",
+      },
+      children: {
+        control: "text",
+        defaultValue: "",
+        description: "Snackbar Content.",
+      },
+    }}
+    name="Snackbar"
+    parameters={{ layout: "fullscreen" }}
+  >
+    {SnackbarTemplate.bind({})}
+  </Story>
+</Canvas>
+
+```jsx
+<Snackbar onClose={() => setOpen(!open)} where="ne" open={open}>
+  This is the snackbar
+</Snackbar>
+```

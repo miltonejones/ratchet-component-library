@@ -1,0 +1,526 @@
+body { 
+  --font-family: Lato, Roboto, Ariel;
+
+  --card-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px -1px,
+    rgba(0, 0, 0, 0.14) 0px 4px 5px 0px, rgba(0, 0, 0, 0.12) 0px 1px 10px 0px;
+
+  --text-color: #333;
+  --color-primary: #27a;
+  --color-secondary: rebeccapurple;
+  --color-success: rgb(30, 70, 32);
+  --color-error: rgb(95, 33, 32);
+  --color-warning: rgb(102, 60, 0);
+  --color-info: rgb(1, 67, 97);
+
+  --back-color-primary: #27a;
+  --back-color-secondary: rebeccapurple;
+  --back-color-info: rgb(229, 246, 253);
+  --back-color-error: rgb(253, 237, 237);
+  --back-color-warning: rgb(255, 244, 229);
+  --back-color-success: rgb(237, 247, 237);
+
+  --hilite-color: beige;
+  --theme-spacing: 4px;
+}
+
+.frame {
+  overflow: auto;
+}
+
+.ui,
+.ui-text {
+  background-color: var(--back-color);
+  color: var(--fore-color);
+  border-color: var(--border-color);
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  min-height: var(--min-height);
+  min-width: var(--min-width);
+}
+
+.ui-size {
+  border-radius: var(--border-radius);
+  width: var(--control-size);
+  height: var(--control-size);
+}
+
+.ui-text {
+  color: var(--text-color);
+  font-family: var(--font-family);
+}
+
+/* TODO: fix these they are fugly */
+.ui-base {
+  -webkit-appearance: none;
+  user-select: none;
+  cursor: pointer;
+  letter-spacing: inherit;
+  color: currentcolor;
+  box-sizing: content-box;
+  /* height: 1.1375em; */
+  /* -webkit-tap-highlight-color: transparent; */
+  min-width: 0px;
+  border-radius: 4px;
+  font: inherit;
+  border-width: 1px;
+  border-style: solid;
+  border-color: initial;
+  border-image: initial;
+  background: none;
+  margin: 0px;
+  padding: 12.5px 14px;
+  font-family: var(--font-family);
+}
+
+.ui-disabled .icon-button:hover {
+  box-shadow: none;
+}
+/* .ui-disabled .icon-button:active {
+  border: none;
+} */
+
+/* backdrop
+--------------------------------------------------------------------------------------- */
+.backdrop {
+  position: absolute;
+  width: 0;
+  height: 0;
+  z-index: 0;
+  background-color: #000;
+  opacity: 0.3;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+}
+
+.backdrop.open {
+  width: 100vw;
+  height: 100vh;
+}
+
+/* inspector
+--------------------------------------------------------------------------------------- */
+.inspector {
+  outline: 1px dotted rgba(0, 0, 0, 0.44);
+  outline-offset: -3px;
+}
+
+.inspector-stat-box {
+  height: 460px;
+  overflow: auto;
+}
+
+.inspector-stat-value {
+  color: rgba(0, 0, 0, 0.44);
+}
+
+.inspector .stats {
+  position: absolute;
+  top: calc(var(--inspector-top) - 24px);
+  left: var(--inspector-left);
+  background-color: var(--color-primary);
+  color: #fff;
+  padding: 8px;
+  transition: opacity 0.3s ease-in;
+  opacity: 0.05;
+  font-size: 0.8rem;
+}
+
+.inspector:hover {
+  outline: 3px solid #37a;
+}
+
+.inspector .stats:hover {
+  cursor: pointer;
+  background-color: var(--color-secondary);
+}
+
+.inspector:hover .stats {
+  opacity: 1;
+}
+
+/* dialog
+--------------------------------------------------------------------------------------- */
+.dialog {
+  position: absolute;
+  width: var(--dialog-width);
+  height: var(--dialog-height);
+  z-index: 1;
+  background-color: #fff;
+  top: 110vh;
+  left: calc(50vw - (var(--dialog-width) / 2));
+  transition: top 0.4s ease-in-out;
+  padding: 12px;
+  border-radius: 4px;
+  box-shadow: var(--card-shadow);
+}
+
+.dialog.open {
+  top: calc(50vh - (var(--dialog-height) / 2));
+}
+
+.divider {
+  width: 100%;
+  margin: calc(var(--theme-spacing) * 3) 0;
+}
+
+/* avatar
+--------------------------------------------------------------------------------------- */
+.avatar {
+  overflow: hidden;
+  border: solid 1px rgba(0, 0, 0, 0.12);
+}
+
+.avatar img {
+  width: var(--control-size);
+  height: var(--control-size);
+}
+
+/* text-box
+--------------------------------------------------------------------------------------- */
+.text-box {
+  border: solid 1px rgba(0, 0, 0, 0.2);
+  font-size: 1.2rem;
+}
+
+/* switch
+--------------------------------------------------------------------------------------- */
+.switch {
+  cursor: pointer;
+  position: relative;
+  width: 48px;
+  height: 32px;
+}
+
+.switch .bar {
+  position: absolute;
+  background-color: gray;
+  top: 8px;
+  left: 8px;
+  height: 16px;
+  width: 36px;
+  border-radius: 12px;
+  z-index: 1;
+}
+
+.switch .knob-o {
+  position: absolute;
+  background-color: white;
+  opacity: 0;
+  top: 2px;
+  left: 4px;
+  height: 28px;
+  width: 28px;
+  border-radius: 50%;
+  transition: left 0.1s linear;
+  z-index: 2;
+}
+
+.switch:hover .knob-o {
+  background-color: black;
+  opacity: 0.2;
+}
+
+.switch .knob-i {
+  position: absolute;
+  background-color: white;
+  box-shadow: 1px 1px 2px #222;
+  z-index: 3;
+  left: 8px;
+  top: 6px;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  transition: left 0.1s linear;
+}
+
+.ui-checked .switch .bar {
+  background-color: var(--back-color);
+}
+
+.ui-checked .switch .knob-o {
+  left: 20px;
+}
+
+.ui-checked .switch .knob-i {
+  background-color: var(--back-color);
+  left: 24px;
+}
+
+/* card
+--------------------------------------------------------------------------------------- */
+.card {
+  font-family: var(--font-family);
+  box-shadow: var(--card-shadow);
+  background-color: white;
+  padding: 12px;
+  border-radius: 5px;
+  overflow: auto;
+  border-width: 0;
+}
+
+.card legend {
+  font-weight: 600;
+}
+
+/* chip
+--------------------------------------------------------------------------------------- */
+.chip {
+  font-family: var(--font-family);
+  padding: 4px 8px;
+  border-radius: 12px;
+  border-style: solid;
+  font-size: 0.85rem;
+  cursor: pointer;
+  min-width: 80px;
+  width: fit-content;
+}
+
+/* button
+--------------------------------------------------------------------------------------- */
+.button {
+  padding: 8px 12px;
+  text-transform: uppercase;
+  font-family: var(--font-family);
+  border-radius: 4px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: box-shadow 0.1s ease-in;
+  width: fit-content;
+}
+
+.button:hover {
+  box-shadow: var(--card-shadow);
+}
+.button:active {
+  box-shadow: none;
+  color: var(--color-success);
+}
+
+/* icon-button
+--------------------------------------------------------------------------------------- */
+.icon-button {
+  border-radius: 50%;
+  transition: box-shadow 0.1s ease-in;
+}
+
+.icon-button:hover {
+  box-shadow: var(--card-shadow);
+}
+
+.icon-button:active {
+  box-shadow: none;
+}
+
+/* collapse
+--------------------------------------------------------------------------------------- */
+.collapse {
+  height: 0;
+  transition: height 0.2s ease-in;
+  overflow: hidden;
+}
+
+.collapse.on {
+  height: var(--open-height);
+  overflow: auto;
+}
+.collapse.noscroll.on {
+  overflow: hidden;
+}
+
+/* list
+--------------------------------------------------------------------------------------- */
+ul.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+ul.list li {
+  border-bottom: solid 1px rgba(0, 0, 0, 0.1);
+}
+
+ul.dense li {
+  border-bottom: none;
+}
+
+/* grid
+--------------------------------------------------------------------------------------- */
+.grid {
+  width: 100%;
+  border: dotted 1px green;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.grid .cell {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+/* alert
+--------------------------------------------------------------------------------------- */
+.alert {
+  font-family: var(--font-family);
+  background-color: var(--back-color);
+  color: var(--fore-color);
+  padding: 12px;
+  border-radius: 4px;
+}
+
+/* select
+--------------------------------------------------------------------------------------- */
+.select {
+  height: auto;
+  min-height: 1.1375em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  border-radius: 4px;
+  max-width: 200px;
+}
+
+/* menu
+--------------------------------------------------------------------------------------- */
+.menu {
+  position: absolute;
+  height: 0;
+  min-width: 140px;
+  background-color: white;
+  box-shadow: var(--card-shadow);
+  padding: 0;
+  transition: height 0.2s ease-in-out, padding 0.2s ease-in-out;
+  overflow: hidden;
+}
+
+.menu-button {
+  cursor: pointer;
+}
+
+.menu .menu-item {
+  padding: 2px 4px;
+  cursor: pointer;
+}
+
+.menu .menu-item:hover {
+  background-color: rgba(90, 90, 90, 0.1);
+}
+
+.menu.open {
+  height: var(--menu-content-height);
+  display: block;
+  padding: 12px;
+}
+
+/* snackbar
+--------------------------------------------------------------------------------------- */
+.snackbar {
+  position: absolute;
+  z-index: 2;
+  background-color: #27a;
+  color: #fff;
+  padding: 12px;
+  font-size: 0.9rem;
+  transition: top 0.5s ease-in, display 0.2s linear;
+  max-height: 32px;
+}
+
+/* .snackbar.open {
+  display: block;
+} */
+
+.snackbar.nw {
+  transition: top 0.5s ease-in;
+  top: -112px;
+  left: 12px;
+}
+
+.snackbar.nw.open {
+  top: 12px;
+}
+
+.snackbar.sw {
+  transition: bottom 0.5s ease-in;
+  left: 12px;
+  bottom: -112px;
+}
+
+.snackbar.sw.open {
+  bottom: 12px;
+}
+
+.snackbar.ne {
+  transition: right 0.5s ease-in;
+  right: -412px;
+  top: 12px;
+}
+
+.snackbar.ne.open {
+  right: 12px;
+}
+
+.snackbar.se {
+  transition: bottom 0.5s ease-in;
+  bottom: -112px;
+  right: 12px;
+}
+
+.snackbar.se.open {
+  bottom: 12px;
+}
+
+/* typography
+--------------------------------------------------------------------------------------- */
+.typo {
+  font-family: var(--font-family);
+}
+.typo.h1 {
+  font-size: 2.5rem;
+}
+.typo.h2 {
+  font-size: 2rem;
+}
+.typo.h3 {
+  font-size: 1.5rem;
+}
+
+.typo.body1 {
+  font-size: 1.2rem;
+}
+
+.typo.body2 {
+  font-size: 1rem;
+}
+
+.typo.subtitle1 {
+  font-size: 0.85rem;
+  color: #222;
+}
+
+.typo.subtitle2 {
+  font-size: 0.7rem;
+  color: #444;
+}
+
+.typo.caption {
+  font-size: 0.85rem;
+  letter-spacing: 1.2;
+}
+
+.typo.button {
+  text-transform: uppercase;
+}
+
+.spinner {
+  animation: spin var(--animation-speed) infinite linear;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
