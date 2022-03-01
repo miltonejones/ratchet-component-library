@@ -4,7 +4,7 @@ body {
   --card-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px -1px,
     rgba(0, 0, 0, 0.14) 0px 4px 5px 0px, rgba(0, 0, 0, 0.12) 0px 1px 10px 0px;
 
-  --text-color: #333;
+  /* --text-color: #333;
   --color-primary: #27a;
   --color-secondary: rebeccapurple;
   --color-success: rgb(30, 70, 32);
@@ -24,7 +24,7 @@ body {
   --color-control-back-success: rgb(64, 148, 68);
   --color-control-back-error: rgb(163, 76, 74);
   --color-control-back-warning: rgb(151, 122, 81);
-  --color-control-back-info: rgb(83, 134, 158);
+  --color-control-back-info: rgb(83, 134, 158); */
 
   --hilite-color: beige;
   --theme-spacing: 4px;
@@ -190,11 +190,43 @@ body {
   border: solid 1px rgba(0, 0, 0, 0.12);
 }
 
-.avatar img {
-  width: var(--control-size);
-  height: var(--control-size);
+.avatar.small,
+.avatar.small img  {
+  width: var(--round-size-small);
+  height: var(--round-size-small);
 }
 
+.avatar.medium,
+.avatar.medium img  {
+  width: var(--round-size-medium);
+  height: var(--round-size-medium);
+}
+
+.avatar.large,
+.avatar.large img  {
+  width: var(--round-size-large);
+  height: var(--round-size-large);
+}
+
+.avatar.xl,
+.avatar.xl img  {
+  width: var(--round-size-xl);
+  height: var(--round-size-xl);
+}
+
+
+.avatar.circle {
+  border-radius: 50%;
+}
+  
+.avatar.rounded {
+  border-radius: 4px;
+}
+  
+.avatar.square {
+  border-radius: 0;
+}
+  
 /* text-box
 --------------------------------------------------------------------------------------- */
 .text-box {

@@ -1,5 +1,6 @@
 import React from "react";
 import "./UI.css";
+import "./theme.css";
 import {
   convertProps,
   css,
@@ -36,17 +37,20 @@ export function Alert({ children, severity = "info", icon: Photo, ...props }) {
   };
   const Icon = Photo || icons[severity];
   const filter = filters[severity];
+  const classes = { alert: 1, 'ui-text': 1 };
+ 
+  
   return (
     <Iw {...props} severity={severity}>
       <Box
         style={{
-          ...convertProps(props),
+          ...convertProps({...props, severity}),
           display: "flex",
           alignItems: "center",
         }}
         {...props}
-        className="alert"
-      >
+        className={css(classes)}
+      > 
         <Icon style={{ marginRight: 12, filter }} />
         {children}
       </Box>
@@ -68,10 +72,21 @@ export function AppBar({ children,   ...props }) {
 /****************************************************************************************************
  *                                           Avatar
  ****************************************************************************************************/
-export function Avatar({ children, src, alt, variant = "circle", ...props }) {
+export function Avatar({ children, src, alt, ...props }) {
   const image = <img src={src} alt={alt} />;
+  
+  const classes = { avatar: 1  };
+  const def = {
+    size: 'large',
+    variant: 'circle'
+  }
+  Object.keys(def).map(t => {
+    const prop = props[t] || def[t]
+    !!prop && Object.assign(classes, { [prop]: 1 })
+  })
+
   return (
-    <Center className="ui ui-size avatar" variant={variant} {...props}>
+    <Center className={css(classes)} {...props}>
       {!!src ? image : children}
     </Center>
   );
@@ -86,6 +101,17 @@ export function Backdrop({ open, onClose: onClick, children, ...props }) {
     <Center {...args} {...props}>
       {children}
     </Center>
+  );
+}
+
+/****************************************************************************************************
+ *                                    Box (suprisingly useful)
+ ****************************************************************************************************/
+export function Box({ children, ...props }) {
+  return (
+    <div style={convertProps(props)} {...props}>
+      {children}
+    </div>
   );
 }
 
@@ -108,17 +134,6 @@ export function Button({ children, onClick, ...props }) {
 }
 
 /****************************************************************************************************
- *                                    Box (suprisingly useful)
- ****************************************************************************************************/
-export function Box({ children, ...props }) {
-  return (
-    <div style={convertProps(props)} {...props}>
-      {children}
-    </div>
-  );
-}
-
-/****************************************************************************************************
  * Card
  * uses a FIELDSET tag to allow for fancy labels
  ****************************************************************************************************/
@@ -127,7 +142,7 @@ export function Card({ children, ...props }) {
     <Iw {...props}>
       <fieldset
         {...props}
-        className="card"
+        className="card ui-plain"
         style={  convertProps(props) }
       >
         {children}
@@ -151,11 +166,13 @@ export function Center({ children, ...props }) {
  *                                            Chip
  ****************************************************************************************************/
 export function Chip({ children, icon, ...props }) {
+  const variant = props.variant || 'outlined';
   return (
-    <Flex {...props} className="ui chip" style={convertProps(props)}>
+    <Center {...props} className={css({'ui-control': 1, chip: 1, [variant]: 1})}
+       style={convertProps(props)}>
       {!!icon && <Box>{icon}</Box>}
       {children}
-    </Flex>
+    </Center>
   );
 }
 
@@ -310,7 +327,7 @@ export function IconButton({ children, onClick, size = "medium", ...props }) {
       className="ui ui-size icon-button"
       {...props}
       size={size}
-      style={{ ...convertProps(props) }}
+      style={{ ...convertProps({...props, size}) }}
     >
       {children}
     </Flex>
@@ -399,23 +416,6 @@ export function Menu({ options = [], onChange, button }) {
   );
 }
 
-/****************************************************************************************************
- * Paper 
- ****************************************************************************************************/
- export function Paper({ children, ...props }) {
-  return (
-    <Iw {...props}>
-      <fieldset
-        {...props}
-        className={css({ paper: 1 }, props.className)}
-        style={  convertProps(props) }
-      >
-        {children}
-      </fieldset>
-    </Iw>
-  );
-}
-
 export function Pagination({click, ...props}) {
   const {
     page, 
@@ -442,11 +442,28 @@ export function Pagination({click, ...props}) {
 
 
 /****************************************************************************************************
+ * Paper 
+ ****************************************************************************************************/
+ export function Paper({ children, ...props }) {
+  return (
+    <Iw {...props}>
+      <fieldset
+        {...props}
+        className={css({ paper: 1, 'ui-plain': 1 }, props.className)}
+        style={  convertProps(props) }
+      >
+        {children}
+      </fieldset>
+    </Iw>
+  );
+}
+
+/****************************************************************************************************
  *                                            Select
  ****************************************************************************************************/
 export function Select({ options = [], value, label, ...props }) {
   return (
-    <select style={convertProps(props)} {...props} className="select ui-base">
+    <select style={convertProps(props)} {...props} className="select ui-input">
       <option>{label}</option>
       {options.map((o, i) => (
         <option selected={o === value} value={o}>
@@ -470,7 +487,7 @@ export const Snackbar = ({
   return (
     <Iw {...props}>
       <Backdrop open={open} onClose={onClose} />
-      <Box className={css({ snackbar: 1, open, [where]: 1 }, props.className)}>{children}</Box>
+      <Box className={css({ 'ui-text': 1, snackbar: 1, open, [where]: 1 }, props.className)}>{children}</Box>
     </Iw>
   );
 };
@@ -532,7 +549,7 @@ export function TextBox({
 }) {
   const width = fullWidth ? "100%" : "inherit";
   const args = {
-    className: "ui-base text-box",
+    className: "ui-input text-box",
     rows,
     value,
     style: { width, ...style, ...convertProps(props) },
@@ -551,9 +568,9 @@ export function Typography({ variant = "body1", children, ...props }) {
   return (
     <Iw {...props}>
       <div
-        style={convertProps(props)}
+        style={convertProps({...props, variant})}
         {...props}
-        className={css({ typo: 1, [variant]: 1, [props.className]: 1 }, props.className)}
+        className={css({ 'ui-plain': 1, typo: 1, [variant]: 1, [props.className]: 1 }, props.className)}
       >
         {children}
       </div>
@@ -565,10 +582,10 @@ function Iw({ inspect, children, ...props }) {
   if (inspect)
     return (
       <Inspector>
-        <Tw {...props}>{children}</Tw>
+      {children}
       </Inspector>
     );
-  return <Tw {...props}>{children}</Tw>;
+  return children
 }
 
 /****************************************************************************************************

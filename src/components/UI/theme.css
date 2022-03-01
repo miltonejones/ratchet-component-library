@@ -1,0 +1,74 @@
+body { 
+    --font-family: Lato, Roboto, Ariel;
+  
+    --card-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px -1px,
+      rgba(0, 0, 0, 0.14) 0px 4px 5px 0px, rgba(0, 0, 0, 0.12) 0px 1px 10px 0px;
+  
+    --text-color: #333;
+    --color-primary: #27a;
+    --color-secondary: rebeccapurple;
+
+
+    --color-success: rgb(30, 70, 32);
+    --color-error: rgb(95, 33, 32);
+    --color-warning: rgb(102, 60, 0);
+    --color-info: rgb(1, 67, 97);
+  
+
+
+    --color-text-back-primary: #27a;
+    --color-text-back-secondary: rebeccapurple;
+ 
+   
+    --color-text-back-info: rgb(229, 246, 253);
+    --color-text-back-error: rgb(253, 237, 237);
+    --color-text-back-warning: rgb(255, 244, 229);
+    --color-text-back-success: rgb(237, 247, 237);
+   
+    --color-control-back-primary: #27a;
+    --color-control-back-secondary: rebeccapurple;
+
+    --color-control-back-success: rgb(64, 148, 68);
+    --color-control-back-error: rgb(163, 76, 74);
+    --color-control-back-warning: rgb(151, 122, 81);
+    --color-control-back-info: rgb(83, 134, 158);
+
+    --round-size-small: 24px;
+    --round-size-medium: 32px;
+    --round-size-large: 48px;
+    --round-size-xl: 64px;
+  
+    --hilite-color: beige;
+    --theme-spacing: 4px;
+    --control-fore-color: beige;
+  }
+
+ 
+
+.ui-text {
+  color: var(--text-fore-color);
+  background-color: var(--text-back-color);
+}
+
+
+.ui-control {
+  color: var(--control-fore-color);
+  background-color: var(--control-back-color);
+}
+.ui-control.filled {
+  color: #fff; 
+  background-color:  var(--control-back-color);
+}
+.ui-control.outlined {
+  color: var(--control-back-color);
+  border-color: var(--control-back-color);
+  background-color: transparent;
+}
+
+.ui-plain {
+  color: var(--text-fore-color); 
+}
+
+.ui-input {
+  border-color: var(--text-fore-color); 
+}

@@ -21,7 +21,7 @@ export default function DialogStory() {
           <Typography variant="body1">Even more in here</Typography>
           <Flex mt={16}>
             <Spacer />
-            <Button mr={2}>Cancel</Button>
+            <Button mr={2} onClick={() => setOpen(!1)}>Cancel</Button>
             <Button variant="filled">Okay</Button>
           </Flex>
         </Stack>
@@ -29,6 +29,7 @@ export default function DialogStory() {
       <Button variant="outlined" onClick={() => setOpen(!0)}>
         open the dialog
       </Button>
+     
     </Center>
   );
 }
