@@ -7,7 +7,12 @@ import {
   Button,
   Card,
   Divider,
+  AppBar,
+  IconButton,
+  Paper
 } from "../../components/UI/UI.js";
+
+import { Hamburger } from "../../icons";
 
 <Meta title="Components/SURFACES" />
 
@@ -58,4 +63,49 @@ Although cards can support multiple actions, UI controls, and an overflow menu, 
   <Divider />
   <Button variant="filled">learn more</Button>
 </Card>
+```
+
+# Paper
+
+In Material Design, the physical properties of paper are translated to the screen.
+
+<Canvas>
+  <Story name="Paper" parameters={{layout: 'fullscreen'}}>
+    <Paper m={4} sx={{ maxWidth: 300 }} >
+      <Typography variant="caption" mb={4}>
+        Word of the Day
+      </Typography>
+      <Typography className="bold" mb={4} variant="body1">
+        rat &bull; chet
+      </Typography>
+      <Typography variant="subtitle1" mb={4}>
+        one who is dirty, low class, no moral values and place themselves in a
+        situation of being known in a negative way.
+      </Typography>
+      <Divider />
+      <Button variant="filled">learn more</Button>
+    </Paper>
+  </Story>
+</Canvas>
+
+# App Bar
+
+The App Bar displays information and actions relating to the current screen.
+
+<Canvas>
+  <Story name="App Bar" parameters={{layout: 'fullscreen'}}>
+    <AppBar color="secondary" >
+       <IconButton  color="secondary" ml={4}>
+         <Hamburger />
+       </IconButton>
+    </AppBar>
+  </Story>
+</Canvas>
+
+```jsx 
+<AppBar color="secondary" >
+    <IconButton  color="secondary" ml={4}>
+      <Hamburger />
+    </IconButton>
+</AppBar>
 ```

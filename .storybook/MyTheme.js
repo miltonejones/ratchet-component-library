@@ -1,4 +1,5 @@
 import { create } from "@storybook/theming";
+import { version, title, repository } from "../package.json";
 
 const br_tag = "<br>";
 const code_tag_open = "<code>";
@@ -37,7 +38,14 @@ export default create({
   inputTextColor: "black",
   inputBorderRadius: 4,
 
-  brandTitle: "Ratchet-UI",
-  brandUrl: "https://example.com",
+  brandTitle: `${title}
+  ${code_tag_open}
+    v${version}
+  ${code_tag_close}
+  ${br_tag}
+  ${small_tag_open}
+  (view on GitHub)
+${small_tag_close}`,
+  brandUrl: `${repository}`,
   // brandImage: "https://place-hold.it/350x150",
 });

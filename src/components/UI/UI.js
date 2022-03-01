@@ -10,7 +10,8 @@ import {
   useCollapse,
 } from "./Themer";
 import useComponentState from "./hooks/useComponentState";
-import { AlertCircle, CheckCircle, AlertTriangle, Info } from "../../icons";
+import usePagination from "./hooks/usePagination";
+import { AlertCircle, CheckCircle, AlertTriangle, Info,ChevronLeft,ChevronRight } from "../../icons";
 
 /****************************************************************************************************
  *                                          RACHET UI
@@ -50,6 +51,17 @@ export function Alert({ children, severity = "info", icon: Photo, ...props }) {
         {children}
       </Box>
     </Iw>
+  );
+}
+
+/****************************************************************************************************
+ *                                           AppBar
+ ****************************************************************************************************/
+export function AppBar({ children,   ...props }) { 
+  return (
+    <Flex align="center" className="ui ui-control app-bar" {...props}>
+      {children}
+    </Flex>
   );
 }
 
@@ -110,13 +122,13 @@ export function Box({ children, ...props }) {
  * Card
  * uses a FIELDSET tag to allow for fancy labels
  ****************************************************************************************************/
-export function Card({ children, style, ...props }) {
+export function Card({ children, ...props }) {
   return (
     <Iw {...props}>
       <fieldset
         {...props}
         className="card"
-        style={{ ...style, ...convertProps(props) }}
+        style={  convertProps(props) }
       >
         {children}
       </fieldset>
@@ -159,7 +171,7 @@ export function Collapse({
   ...props
 }) {
   const { ref, style } = useCollapse(height, on);
-  const styleName = css({ collapse: 1, on, [className]: 1, noscroll });
+  const styleName = css({ collapse: 1, on, [className]: 1, noscroll }, props.className);
   return (
     <Iw {...props}>
       <Cw ref={ref} style={style}>
@@ -185,7 +197,9 @@ export function Dialog({
   return (
     <Iw {...props} width={width} height={height}>
       <Backdrop open={open} onClose={onClose} />
-      <Box className={css({ dialog: 1, open })} {...props}>
+      {/* [[{JSON.stringify(css({ dialog: 1, open }, props.className))}]]
+      [[{props.className}]] */}
+      <Box className={css({ dialog: 1, open }, props.className)} {...props}>
         {children}
       </Box>
     </Iw>
@@ -193,7 +207,7 @@ export function Dialog({
 }
 
 /****************************************************************************************************
- *                                         Divider
+ *                                          Divider
  ****************************************************************************************************/
 export function Divider(props) {
   return <hr className="divider" {...props} />;
@@ -207,8 +221,7 @@ export function Flex({
   justify: justifyContent,
   align: alignItems,
   xs,
-  spacing = 0,
-  style,
+  spacing = 0, 
   wrap,
   column,
   children,
@@ -225,14 +238,19 @@ export function Flex({
     alignItems,
     width,
     margin,
-    flexWrap,
-    ...style,
+    flexWrap, 
     ...convertProps(props),
   };
+
+  const classes = {"ui-text": 1, flex: 1};
+  // TODO: handle added classes in the css function 
+ 
+
   return (
     <Iw {...props} width={width}>
+     {/* [[ {css(classes, props.className)}]] */}
       <div
-        className={css({ "ui-text": 1, flex: 1, [props.className]: 1 })}
+        className={css(classes, props.className)}
         {...props}
         style={styles}
       >
@@ -327,7 +345,7 @@ export function Inspector({ children, ...props }) {
 export function List({ items, children, dense, header, footer, ...props }) {
   return (
     <ul
-      className={css({ list: 1, dense })}
+      className={css({ list: 1, dense }, props.className)}
       {...props}
       style={convertProps(props)}
     >
@@ -382,6 +400,48 @@ export function Menu({ options = [], onChange, button }) {
 }
 
 /****************************************************************************************************
+ * Paper 
+ ****************************************************************************************************/
+ export function Paper({ children, ...props }) {
+  return (
+    <Iw {...props}>
+      <fieldset
+        {...props}
+        className={css({ paper: 1 }, props.className)}
+        style={  convertProps(props) }
+      >
+        {children}
+      </fieldset>
+    </Iw>
+  );
+}
+
+export function Pagination({click, ...props}) {
+  const {
+    page, 
+    setState, 
+    startPage, 
+    last, 
+    pageText, 
+    descText
+  } = usePagination(props);
+  return <Iw {...props}>
+    <Flex className="pagination">
+      <div onClick={() => setState((s) => ({ page: !s.page }))}>
+        {page ? pageText : descText}
+      </div>
+      <IconButton disabled={startPage < 1} click={() => click(-1)}>
+          <ChevronLeft />
+      </IconButton>
+      <IconButton disabled={last} click={() => click(1)}>
+          <ChevronLeft />
+      </IconButton>
+    </Flex>
+  </Iw>
+}
+
+
+/****************************************************************************************************
  *                                            Select
  ****************************************************************************************************/
 export function Select({ options = [], value, label, ...props }) {
@@ -410,7 +470,7 @@ export const Snackbar = ({
   return (
     <Iw {...props}>
       <Backdrop open={open} onClose={onClose} />
-      <Box className={css({ snackbar: 1, open, [where]: 1 })}>{children}</Box>
+      <Box className={css({ snackbar: 1, open, [where]: 1 }, props.className)}>{children}</Box>
     </Iw>
   );
 };
@@ -493,7 +553,7 @@ export function Typography({ variant = "body1", children, ...props }) {
       <div
         style={convertProps(props)}
         {...props}
-        className={css({ typo: 1, [variant]: 1, [props.className]: 1 })}
+        className={css({ typo: 1, [variant]: 1, [props.className]: 1 }, props.className)}
       >
         {children}
       </div>

@@ -18,6 +18,13 @@ body {
   --back-color-error: rgb(253, 237, 237);
   --back-color-warning: rgb(255, 244, 229);
   --back-color-success: rgb(237, 247, 237);
+ 
+  --color-control-back-primary: #27a;
+  --color-control-back-secondary: rebeccapurple;
+  --color-control-back-success: rgb(30, 70, 32);
+  --color-control-back-error: rgb(95, 33, 32);
+  --color-control-back-warning: rgb(102, 60, 0);
+  --color-control-back-info: rgb(1, 67, 97);
 
   --hilite-color: beige;
   --theme-spacing: 4px;
@@ -38,6 +45,10 @@ body {
   min-width: var(--min-width);
 }
 
+.ui-control {
+  background-color: var(--control-back-color); 
+}
+
 .ui-size {
   border-radius: var(--border-radius);
   width: var(--control-size);
@@ -46,6 +57,7 @@ body {
 
 .ui-text {
   color: var(--text-color);
+  font-family: var(--font-family);
 }
 
 /* TODO: fix these they are fugly */
@@ -81,6 +93,14 @@ body {
 /* .ui-disabled .icon-button:active {
   border: none;
 } */
+
+.app-bar {
+  width: 100vw;
+  height: 48px;
+  margin: 0;
+  position: fixed;
+  box-shadow: var(--card-shadow);
+}
 
 /* backdrop
 --------------------------------------------------------------------------------------- */
@@ -250,15 +270,21 @@ body {
   left: 24px;
 }
 
-/* card
+/* card/paper
 --------------------------------------------------------------------------------------- */
-.card {
+.card, .paper {
   font-family: var(--font-family);
-  box-shadow: var(--card-shadow);
   background-color: white;
   padding: 12px;
   border-radius: 5px;
   overflow: auto;
+  border-width: 1px;
+}
+
+/* card
+--------------------------------------------------------------------------------------- */
+.card {
+  box-shadow: var(--card-shadow);
   border-width: 0;
 }
 
@@ -275,6 +301,10 @@ body {
   border-style: solid;
   font-size: 0.85rem;
   cursor: pointer;
+  min-width: 80px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
 }
 
 /* button
@@ -425,12 +455,12 @@ ul.dense li {
   color: #fff;
   padding: 12px;
   font-size: 0.9rem;
-  transition: top 0.5s ease-in;
+  transition: top 0.5s ease-in, display 0.2s linear;
   max-height: 32px;
 }
 
 /* .snackbar.open {
-  top: 12px;
+  display: block;
 } */
 
 .snackbar.nw {
@@ -455,7 +485,7 @@ ul.dense li {
 
 .snackbar.ne {
   transition: right 0.5s ease-in;
-  right: -112px;
+  right: -412px;
   top: 12px;
 }
 
@@ -543,4 +573,4 @@ ul.dense li {
 }
 
 
-/*# sourceMappingURL=main.85fff6a8.css.map*/
+/*# sourceMappingURL=main.9cfe6717.css.map*/

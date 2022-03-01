@@ -18,6 +18,13 @@ body {
   --back-color-error: rgb(253, 237, 237);
   --back-color-warning: rgb(255, 244, 229);
   --back-color-success: rgb(237, 247, 237);
+ 
+  --color-control-back-primary: #27a;
+  --color-control-back-secondary: rebeccapurple;
+  --color-control-back-success: rgb(30, 70, 32);
+  --color-control-back-error: rgb(95, 33, 32);
+  --color-control-back-warning: rgb(102, 60, 0);
+  --color-control-back-info: rgb(1, 67, 97);
 
   --hilite-color: beige;
   --theme-spacing: 4px;
@@ -36,6 +43,10 @@ body {
   border-style: var(--border-style);
   min-height: var(--min-height);
   min-width: var(--min-width);
+}
+
+.ui-control {
+  background-color: var(--control-back-color); 
 }
 
 .ui-size {
@@ -78,6 +89,14 @@ body {
 /* .ui-disabled .icon-button:active {
   border: none;
 } */
+
+.app-bar {
+  width: 100vw;
+  height: 48px;
+  margin: 0;
+  position: fixed;
+  box-shadow: var(--card-shadow);
+}
 
 /* backdrop
 --------------------------------------------------------------------------------------- */
@@ -247,15 +266,21 @@ body {
   left: 24px;
 }
 
-/* card
+/* card/paper
 --------------------------------------------------------------------------------------- */
-.card {
+.card, .paper {
   font-family: var(--font-family);
-  box-shadow: var(--card-shadow);
   background-color: white;
   padding: 12px;
   border-radius: 5px;
   overflow: auto;
+  border-width: 1px;
+}
+
+/* card
+--------------------------------------------------------------------------------------- */
+.card {
+  box-shadow: var(--card-shadow);
   border-width: 0;
 }
 

@@ -2,7 +2,7 @@
   "name": "ratchet-component-library",
   "version": "0.1.0",
   "title": "Ratchet-UI",
-  "repository": "",
+  "repository": "https://github.com/miltonejones/ratchet-component-library",
   "private": false,
   "dependencies": {
     "@storybook/addon-docs": "^6.4.19",

@@ -1,0 +1,33 @@
+import { Canvas, Meta, Story, ArgsTable } from "@storybook/addon-docs";
+import InspectorStory from "./InspectorStory.js";
+
+<Meta title="Components/UTILS" />
+
+export const Template = (args) => <InspectorStory {...args} />;
+
+# Inspector
+
+The Inspector wraps any component in a visible border and exposes a searchable dialog to read its styles.
+
+<Canvas>
+  <Story name="Inspector">{Template.bind({})}</Story>
+</Canvas>
+
+```jsx
+<Inspector>
+  <Card mr={6} style={{ minWidth: 245 }}>
+    <List
+      dense
+      items={[
+        <Flex sx={{ margin: 12 }} align="center">
+          <AlertTriangle /> <Box ml={2}>Inbox</Box>
+        </Flex>,
+        <Box sx={{ margin: 12 }}>Drafts</Box>,
+        <Divider />,
+        <Box sx={{ margin: 12 }}>Trash</Box>,
+        <Box sx={{ margin: 12 }}>Spam</Box>,
+      ]}
+    />
+  </Card>
+</Inspector>
+```
