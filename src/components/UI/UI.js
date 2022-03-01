@@ -97,7 +97,7 @@ export function Button({ children, onClick, ...props }) {
     <Iw {...props}>
       <Center
         {...props}
-        className="ui button"
+        className="ui ui-control button"
         style={{ ...convertProps(props) }}
         onClick={(e) => !props.disabled && onClick && onClick(e)}
       >
@@ -242,7 +242,7 @@ export function Flex({
     ...convertProps(props),
   };
 
-  const classes = {"ui-text": 1, flex: 1};
+  const classes = {"ui": 1, flex: 1};
   // TODO: handle added classes in the css function 
  
 
@@ -507,7 +507,7 @@ export function Switch({ onChange, ...props }) {
     <Iw {...props} variant="filled">
       <div
         onClick={() => onChange && !props.disabled && onChange(!props.checked)}
-        className="switch"
+        className="switch ui"
         style={convertProps(props)}
         {...props}
       >

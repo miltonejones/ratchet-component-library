@@ -1,6 +1,5 @@
 import React from "react";
 
-
 export const paginate = (startPage, pageSize, length, label) => {
     const beginPage = startPage + 1;
     const pageNum = Math.ceil(beginPage / pageSize);

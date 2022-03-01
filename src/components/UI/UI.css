@@ -21,10 +21,10 @@ body {
  
   --color-control-back-primary: #27a;
   --color-control-back-secondary: rebeccapurple;
-  --color-control-back-success: rgb(30, 70, 32);
-  --color-control-back-error: rgb(95, 33, 32);
-  --color-control-back-warning: rgb(102, 60, 0);
-  --color-control-back-info: rgb(1, 67, 97);
+  --color-control-back-success: rgb(64, 148, 68);
+  --color-control-back-error: rgb(163, 76, 74);
+  --color-control-back-warning: rgb(151, 122, 81);
+  --color-control-back-info: rgb(83, 134, 158);
 
   --hilite-color: beige;
   --theme-spacing: 4px;
@@ -36,7 +36,6 @@ body {
 
 .ui,
 .ui-text {
-  background-color: var(--back-color);
   color: var(--fore-color);
   border-color: var(--border-color);
   border-width: var(--border-width);
@@ -47,6 +46,7 @@ body {
 
 .ui-control {
   background-color: var(--control-back-color); 
+  background-color: var(--back-color);
 }
 
 .ui-size {
@@ -254,7 +254,7 @@ body {
 }
 
 .ui-checked .switch .bar {
-  background-color: var(--back-color);
+  background-color: var(--control-back-color);
 }
 
 .ui-checked .switch .knob-o {
@@ -262,7 +262,7 @@ body {
 }
 
 .ui-checked .switch .knob-i {
-  background-color: var(--back-color);
+  background-color: var(--control-back-color);
   left: 24px;
 }
 
