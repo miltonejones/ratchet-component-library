@@ -8,14 +8,14 @@ import {
   Stack,
 } from "../../components/UI/UI.js";
 
-export default function SnackbarStory() {
-  const [where, setWhere] = React.useState("ne");
-  const [open, setOpen] = React.useState(false);
+export default function SnackbarStory(args) {
+  const [where, setWhere] = React.useState(args.where);
+  const [open, setOpen] = React.useState(args.open);
   const wheres = ["nw", "ne", "se", "sw"];
   return (
     <>
       {" "}
-      <Snackbar onClose={() => setOpen(!open)} where={where} open={open}>
+      <Snackbar onClose={() => setOpen(!open)} where={where} open={open || args.open}>
         This is the snackbar
       </Snackbar>
       <Center mt={12}>

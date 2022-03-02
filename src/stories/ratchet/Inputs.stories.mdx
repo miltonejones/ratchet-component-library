@@ -9,122 +9,11 @@ import {
   Center,
   Typography,
 } from "../../components/UI/UI.js";
+import { textHue} from './ArgTypes.js'
 
 <Meta title="Components/INPUTS" />
 
-# Button
-
-Buttons allow users to take actions, and make choices, with a single tap
-
-<Canvas>
-  <Story
-    name="Button"
-    argTypes={{
-      variant: {
-        control: "text",
-        defaultValue: "outlined",
-        description: "Sets the type of button to display",
-      },
-    }}
-  >
-    <Flex>
-      <Button id="Unchecked" variant="outlined" mr={2}>
-        button
-      </Button>
-      <Button id="Checked" variant="filled" mr={2}>
-        button
-      </Button>
-      <Button id="filled" variant="filled" color="secondary" mr={2}>
-        button
-      </Button>
-      <Button id="disabled" mr={2} color="info">
-        button
-      </Button>
-    </Flex>
-  </Story>
-</Canvas>
-
-```jsx
-<Button variant="filled">button</Button>
-```
-
-<ArgsTable story="Button" />
-
-# Text Field
-
-Text fields let users enter and edit text.
-
-<Canvas>
-  <Story
-    name="TextBox"
-    argTypes={{
-      value: {
-        control: "text",
-        defaultValue: "",
-        description: "Value of the TextBox  ",
-      },
-    }}
-  >
-    <Flex>
-      <TextBox placeholder="Basic TextBox" mr={2} />
-      <TextBox value="Populated TextBox" mr={2} />
-      <TextBox disabled value="Disabled TextBox" mr={2} />
-    </Flex>
-  </Story>
-</Canvas>
-
-```jsx
-<TextBox value="Populated TextBox" />
-```
-
-# Select
-
-Select components are used for collecting user provided information from a list of options.
-
-<Canvas>
-  <Story
-    name="Select"
-    argTypes={{
-      options: {
-        control: "text",
-        defaultValue: "peas, greens, potatoes, tomatoes, you name it!",
-        description: "Array of values to display",
-      },
-    }}
-  >
-    <Flex>
-      <Select options={["apples", "pears", "bananas", "world peace"]} mr={2} />
-    </Flex>
-  </Story>
-</Canvas>
-
-```jsx
-<Select options={["apples", "pears", "bananas", "world peace"]} />
-```
-
-<ArgsTable story="Select" />
-
-# Switch
-
-Switches toggle the state of a single setting on or off.
-
-<Canvas>
-  <Story
-    name="Switch"
-    argTypes={{
-      checked: {
-        control: "boolean",
-        defaultValue: false,
-        description: "Sets whether Switch is set to true or false",
-      },
-      color: {
-        control: "text",
-        defaultValue: "primary",
-        description: "Color of the Switch",
-      },
-    }}
-  >
-    <Flex>
+export const SwitchTemplate = args =>  <Flex>
       <Stack align="center" mr={6}>
         <Switch color="info" checked />
         <Typography variant="caption">Info Switch</Typography>
@@ -146,15 +35,193 @@ Switches toggle the state of a single setting on or off.
         <Typography variant="caption">Unchecked Switch</Typography>
       </Stack>
       <Stack align="center" mr={6}>
-        <Switch color="success" disabled />
-        <Typography variant="caption">disabled Switch</Typography>
+        <Switch {...args} />
+        <Typography variant="caption">specimen Switch</Typography>
       </Stack>
     </Flex>
+
+
+export const SelectTemplate = args =>  <Flex>
+      <Select {...args} mr={2} w={60} />
+    </Flex>
+
+export const ButtonTemplate = args =>  <Flex>
+      <Button {...args} mr={2}>
+       specimen button
+      </Button>
+      <Button id="Unchecked" variant="outlined" mr={2}>
+        button
+      </Button>
+      <Button id="Checked" variant="filled" mr={2}>
+        button
+      </Button>
+      <Button id="filled" variant="filled" color="secondary" mr={2}>
+        button
+      </Button>
+      <Button id="disabled" mr={2} color="info">
+        button
+      </Button>
+    </Flex>
+
+export const TextBoxTemplate = args => <Flex>
+      <TextBox {...args} placeholder="Specimen TextBox" mr={2} />
+      <TextBox label="Success Label" color="success" placeholder="Basic TextBox" mr={2} />
+      <TextBox value="Populated TextBox" mr={2} />
+      <TextBox size="small" disabled value="Disabled TextBox" mr={2} />
+    </Flex>
+
+# Button
+
+Buttons allow users to take actions, and make choices, with a single tap
+
+<Canvas>
+  <Story
+    name="Button"
+    argTypes={{
+      variant: {
+        control: "radio",
+        options: ['filled', 'outlined', 'standard'],
+        defaultValue: "outlined",
+        description: "Sets the type of button to display",
+      },
+      color: {
+        control: 'radio',
+        options: textHue,
+        defaultValue: 'primary',
+        description: 'Color of the button'
+      }
+    }}
+    args={{
+      variant: 'standard',
+      color: 'success'
+    }}
+  >
+    {ButtonTemplate.bind({})}
+  </Story>
+</Canvas>
+
+```jsx
+<Button variant="filled">button</Button>
+```
+
+## Button properties
+
+<ArgsTable story="Button" />
+
+# Text Field
+
+Text fields let users enter and edit text.
+
+<Canvas>
+  <Story
+    name="TextBox"
+    argTypes={{
+      variant: {
+        control: "radio",
+        options: ['filled', 'outlined', 'standard'],
+        defaultValue: "outlined",
+        description: "Sets the type of text box to display",
+      },
+      label: {
+        control: "text",
+        defaultValue: "",
+        description: "Label to appear above the TextBox  ",
+      },
+      value: {
+        control: "text",
+        defaultValue: "",
+        description: "Value of the TextBox  ",
+      },
+      color: {
+        control: 'radio',
+        options: ['primary', 'secondary', ...textHue],
+        defaultValue: 'primary',
+        description: 'Color of the TextBox'
+      },
+      size: {
+        control: 'radio',
+        options: ['small', 'large'],
+        defaultValue: 'large',
+        description: 'Size of the TextBox'
+      },
+    }}
+    args={{
+      variant: 'standard',
+      color: 'primary',
+      size: 'large',
+      label: 'Specimen'
+    }}
+  >
+    {TextBoxTemplate.bind()}
+  </Story>
+</Canvas>
+
+```jsx
+<TextBox value="Populated TextBox" />
+```
+
+## TextBox properties
+
+<ArgsTable story="TextBox" />
+
+# Select
+
+Select components are used for collecting user provided information from a list of options.
+
+<Canvas>
+  <Story
+    name="Select"
+    argTypes={{
+      options: { 
+        defaultValue: [],
+        description: "Array of values to display",
+      },
+    }}
+    args={{
+      options: ["peas", "greens", "potatoes", "tomatoes", "you name it!"]
+    }}
+  >
+    {SelectTemplate.bind({})}
+  </Story>
+</Canvas>
+
+```jsx
+<Select options={["apples", "pears", "bananas", "world peace"]} />
+```
+
+## Select properties 
+
+<ArgsTable story="Select" />
+
+# Switch
+
+Switches toggle the state of a single setting on or off.
+
+<Canvas>
+  <Story
+    name="Switch"
+    argTypes={{
+      checked: {
+        control: "boolean",
+        defaultValue: false,
+        description: "Sets whether Switch is set to true or false",
+      },
+      color: {
+        control: 'radio',
+        options: ['primary', 'secondary', ...textHue],
+        defaultValue: 'primary',
+        description: 'Color of the Switch'
+      },
+    }}
+  >
+    {SwitchTemplate.bind({})}
   </Story>
 </Canvas>
 
 ```jsx
 <Switch color="success" />
 ```
+
+## Switch properties  
 
 <ArgsTable story="Switch" />

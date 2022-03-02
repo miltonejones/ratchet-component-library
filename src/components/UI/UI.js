@@ -1,9 +1,9 @@
 import React from "react";
 import "./UI.css";
+import "./theme.css";
 import {
   convertProps,
-  css,
-  Tw,
+  css, 
   Cw,
   THEME_SPACING,
   useInspector,
@@ -11,7 +11,7 @@ import {
 } from "./Themer";
 import useComponentState from "./hooks/useComponentState";
 import usePagination from "./hooks/usePagination";
-import { AlertCircle, CheckCircle, AlertTriangle, Info,ChevronLeft,ChevronRight } from "../../icons";
+import { AlertCircle, CheckCircle, AlertTriangle, Info, ChevronLeft, ChevronRight } from "../../icons";
 
 /****************************************************************************************************
  *                                          RACHET UI
@@ -36,17 +36,20 @@ export function Alert({ children, severity = "info", icon: Photo, ...props }) {
   };
   const Icon = Photo || icons[severity];
   const filter = filters[severity];
+  const classes = { alert: 1, 'ui-text': 1 };
+ 
+  
   return (
     <Iw {...props} severity={severity}>
       <Box
         style={{
-          ...convertProps(props),
+          ...convertProps({...props, severity}),
           display: "flex",
           alignItems: "center",
         }}
         {...props}
-        className="alert"
-      >
+        className={css(classes)}
+      > 
         <Icon style={{ marginRight: 12, filter }} />
         {children}
       </Box>
@@ -65,13 +68,24 @@ export function AppBar({ children,   ...props }) {
   );
 }
 
+const createClasses = (props, classes, defaultValues) => {
+  Object.keys(defaultValues).map(t => {
+    const prop =  props[t] || defaultValues[t]
+    !!prop && Object.assign(classes, { [prop]: !0 })
+  })
+  defaultValues.hasOwnProperty('checked') && Object.assign(classes, { checked: props.checked })
+  return css(classes, props.className);
+}
+
 /****************************************************************************************************
  *                                           Avatar
  ****************************************************************************************************/
-export function Avatar({ children, src, alt, variant = "circle", ...props }) {
+export function Avatar({ children, src, alt, ...props }) {
   const image = <img src={src} alt={alt} />;
+  const classes = { avatar: !0  };
+  const def = { size: 'large', variant: 'circle' } ;
   return (
-    <Center className="ui ui-size avatar" variant={variant} {...props}>
+    <Center className={createClasses(props, classes, def)} {...props}>
       {!!src ? image : children}
     </Center>
   );
@@ -90,24 +104,6 @@ export function Backdrop({ open, onClose: onClick, children, ...props }) {
 }
 
 /****************************************************************************************************
- *                                            Button
- ****************************************************************************************************/
-export function Button({ children, onClick, ...props }) {
-  return (
-    <Iw {...props}>
-      <Center
-        {...props}
-        className="ui ui-control button"
-        style={{ ...convertProps(props) }}
-        onClick={(e) => !props.disabled && onClick && onClick(e)}
-      >
-        {children}
-      </Center>
-    </Iw>
-  );
-}
-
-/****************************************************************************************************
  *                                    Box (suprisingly useful)
  ****************************************************************************************************/
 export function Box({ children, ...props }) {
@@ -115,6 +111,26 @@ export function Box({ children, ...props }) {
     <div style={convertProps(props)} {...props}>
       {children}
     </div>
+  );
+}
+
+/****************************************************************************************************
+ *                                            Button
+ ****************************************************************************************************/
+export function Button({ children, onClick, ...props }) {
+  const classes = { 'ui-control': !0 , button: !0 };
+  const def = { size: 'large', variant: 'outlined' } ;
+  return (
+    <Iw {...props}>
+      <Center
+        {...props}
+        className={createClasses(props, classes, def)}
+        style={convertProps(props)}
+        onClick={(e) => !props.disabled && onClick && onClick(e)}
+      >
+        {children}
+      </Center>
+    </Iw>
   );
 }
 
@@ -127,7 +143,7 @@ export function Card({ children, ...props }) {
     <Iw {...props}>
       <fieldset
         {...props}
-        className="card"
+        className="card ui-plain"
         style={  convertProps(props) }
       >
         {children}
@@ -150,12 +166,20 @@ export function Center({ children, ...props }) {
 /****************************************************************************************************
  *                                            Chip
  ****************************************************************************************************/
-export function Chip({ children, icon, ...props }) {
+export function Chip({ children, icon, ...props }) { 
   return (
-    <Flex {...props} className="ui chip" style={convertProps(props)}>
+    <Center
+    {...props} 
+      className={
+        createClasses(
+          props, {
+            'ui-control': 1, 
+            chip: 1
+          }, {variant: 'outlined', size: 'small'})}
+       style={convertProps(props)}>
       {!!icon && <Box>{icon}</Box>}
       {children}
-    </Flex>
+    </Center>
   );
 }
 
@@ -194,12 +218,14 @@ export function Dialog({
   height = "200px",
   ...props
 }) {
+  const style = {
+    "--dialog-width": width,
+    "--dialog-height": height,
+  }
   return (
-    <Iw {...props} width={width} height={height}>
-      <Backdrop open={open} onClose={onClose} />
-      {/* [[{JSON.stringify(css({ dialog: 1, open }, props.className))}]]
-      [[{props.className}]] */}
-      <Box className={css({ dialog: 1, open }, props.className)} {...props}>
+    <Iw {...props}>
+      <Backdrop open={open} onClose={onClose} /> 
+      <Box  style={style} className={css({ dialog: 1, open }, props.className)} {...props}>
         {children}
       </Box>
     </Iw>
@@ -310,7 +336,7 @@ export function IconButton({ children, onClick, size = "medium", ...props }) {
       className="ui ui-size icon-button"
       {...props}
       size={size}
-      style={{ ...convertProps(props) }}
+      style={{ ...convertProps({...props, size}) }}
     >
       {children}
     </Flex>
@@ -342,12 +368,13 @@ export function Inspector({ children, ...props }) {
 /****************************************************************************************************
  *                                            List
  ****************************************************************************************************/
-export function List({ items, children, dense, header, footer, ...props }) {
+export function List({ items, children, dense = false, header, footer, ...props }) {
+  const classes = { list: 1, dense }
   return (
     <ul
-      className={css({ list: 1, dense }, props.className)}
-      {...props}
-      style={convertProps(props)}
+     {...props}
+      className={createClasses(props, classes, { dense: false  })}
+      style={convertProps({props})}
     >
       {!!header && <li>{header}</li>}
       {items?.map((item, i) => (
@@ -399,23 +426,6 @@ export function Menu({ options = [], onChange, button }) {
   );
 }
 
-/****************************************************************************************************
- * Paper 
- ****************************************************************************************************/
- export function Paper({ children, ...props }) {
-  return (
-    <Iw {...props}>
-      <fieldset
-        {...props}
-        className={css({ paper: 1 }, props.className)}
-        style={  convertProps(props) }
-      >
-        {children}
-      </fieldset>
-    </Iw>
-  );
-}
-
 export function Pagination({click, ...props}) {
   const {
     page, 
@@ -442,11 +452,28 @@ export function Pagination({click, ...props}) {
 
 
 /****************************************************************************************************
+ * Paper 
+ ****************************************************************************************************/
+ export function Paper({ children, ...props }) {
+  return (
+    <Iw {...props}>
+      <fieldset
+        {...props}
+        className={css({ paper: 1, 'ui-plain': 1 }, props.className)}
+        style={  convertProps(props) }
+      >
+        {children}
+      </fieldset>
+    </Iw>
+  );
+}
+
+/****************************************************************************************************
  *                                            Select
  ****************************************************************************************************/
-export function Select({ options = [], value, label, ...props }) {
+export function SelectInner({ options = [], value, label, ...props }) {
   return (
-    <select style={convertProps(props)} {...props} className="select ui-base">
+    <select>
       <option>{label}</option>
       {options.map((o, i) => (
         <option selected={o === value} value={o}>
@@ -457,6 +484,13 @@ export function Select({ options = [], value, label, ...props }) {
   );
 }
 
+export function Select(props) {
+  const classes = { 'ui-input': 1, 'select': 1 };
+  const defaults = { color: 'default', size: 'medium' } ;
+  return <Tw selector="select" defaults={defaults}  {...props}
+        ><SelectInner {...props} /></Tw>
+}
+
 /****************************************************************************************************
  *                                          Snackbar
  ****************************************************************************************************/
@@ -465,12 +499,16 @@ export const Snackbar = ({
   open,
   where = "sw",
   onClose,
+  color = "info",
   ...props
 }) => {
+  const classes = { 'ui-text': 1, snackbar: 1, open, [where]: 1 };
+  const def = { color: 'info' } ;
+ 
   return (
     <Iw {...props}>
       <Backdrop open={open} onClose={onClose} />
-      <Box className={css({ snackbar: 1, open, [where]: 1 }, props.className)}>{children}</Box>
+      <Box style={convertProps({...props, color})}  className={createClasses(props, classes, def)}>{children}</Box>
     </Iw>
   );
 };
@@ -490,11 +528,12 @@ export function Spinner({ children, ...props }) {
     </Center>
   );
 }
+
 /****************************************************************************************************
  *                                           Stack
  ****************************************************************************************************/
 export const Stack = ({ children, ...props }) => (
-  <Flex column className="ui-text" style={convertProps(props)} {...props}>
+  <Flex column style={convertProps(props)} {...props}>
     {children}
   </Flex>
 );
@@ -503,11 +542,13 @@ export const Stack = ({ children, ...props }) => (
  *                                          Switch
  ****************************************************************************************************/
 export function Switch({ onChange, ...props }) {
+  const classes = { 'ui-control': 1, 'switch': 1 };
+  const def = { color: 'info', checked: !1 } ;
   return (
     <Iw {...props} variant="filled">
       <div
         onClick={() => onChange && !props.disabled && onChange(!props.checked)}
-        className="switch ui"
+        className={createClasses(props, classes, def)}
         style={convertProps(props)}
         {...props}
       >
@@ -522,7 +563,7 @@ export function Switch({ onChange, ...props }) {
 /****************************************************************************************************
  *                                           TextBox
  ****************************************************************************************************/
-export function TextBox({
+export function TextBoxInner({
   fullWidth,
   style,
   multiple,
@@ -532,7 +573,7 @@ export function TextBox({
 }) {
   const width = fullWidth ? "100%" : "inherit";
   const args = {
-    className: "ui-base text-box",
+    className: "ui-input text-box",
     rows,
     value,
     style: { width, ...style, ...convertProps(props) },
@@ -544,16 +585,25 @@ export function TextBox({
   return <input {...args} />;
 }
 
+export function TextBox({label, ...props}) { 
+  const defaults = { color: 'default', size: 'medium', variant: 'standard' } ;
+  return <Tw defaults={defaults} {...props}
+        >{!!label&&<label>{label}</label>}
+        <TextBoxInner {...props} /></Tw>
+}
+
 /****************************************************************************************************
  *                                          Typography
  ****************************************************************************************************/
-export function Typography({ variant = "body1", children, ...props }) {
+export function Typography({  children, ...props }) {
+  const classes = { 'ui-plain': 1, typo: 1 };
+  const defaults = {variant: 'body1' } 
   return (
     <Iw {...props}>
       <div
         style={convertProps(props)}
         {...props}
-        className={css({ typo: 1, [variant]: 1, [props.className]: 1 }, props.className)}
+        className={createClasses(props, classes, defaults)}
       >
         {children}
       </div>
@@ -561,14 +611,25 @@ export function Typography({ variant = "body1", children, ...props }) {
   );
 }
 
+
+// Text Wrapper
+function Tw({selector, defaults, children, ...props}) {
+  const classes = { 'ui-input': 1, [selector]: 1 }; 
+  return <Box  
+          style={convertProps(props)}
+          className={createClasses(props, classes, defaults)}
+        >{children}</Box>
+}
+
+// Inspection Wrapper
 function Iw({ inspect, children, ...props }) {
   if (inspect)
     return (
       <Inspector>
-        <Tw {...props}>{children}</Tw>
+      {children}
       </Inspector>
     );
-  return <Tw {...props}>{children}</Tw>;
+  return children
 }
 
 /****************************************************************************************************
