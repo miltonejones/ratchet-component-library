@@ -27,7 +27,7 @@ const convertProps = (props) =>
         '--control-back-color': `var(--color-control-back-${hue})` 
       })
     })
-    return o;
+    return {...o, ...props?.style};
   })({});
 
 /**

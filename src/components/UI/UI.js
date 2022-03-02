@@ -3,8 +3,7 @@ import "./UI.css";
 import "./theme.css";
 import {
   convertProps,
-  css,
-  Tw,
+  css, 
   Cw,
   THEME_SPACING,
   useInspector,
@@ -69,24 +68,24 @@ export function AppBar({ children,   ...props }) {
   );
 }
 
+const createClasses = (props, classes, defaultValues) => {
+  Object.keys(defaultValues).map(t => {
+    const prop =  props[t] || defaultValues[t]
+    !!prop && Object.assign(classes, { [prop]: !0 })
+  })
+  defaultValues.hasOwnProperty('checked') && Object.assign(classes, { checked: props.checked })
+  return css(classes, props.className);
+}
+
 /****************************************************************************************************
  *                                           Avatar
  ****************************************************************************************************/
 export function Avatar({ children, src, alt, ...props }) {
   const image = <img src={src} alt={alt} />;
-  
-  const classes = { avatar: 1  };
-  const def = {
-    size: 'large',
-    variant: 'circle'
-  }
-  Object.keys(def).map(t => {
-    const prop = props[t] || def[t]
-    !!prop && Object.assign(classes, { [prop]: 1 })
-  })
-
+  const classes = { avatar: !0  };
+  const def = { size: 'large', variant: 'circle' } ;
   return (
-    <Center className={css(classes)} {...props}>
+    <Center className={createClasses(props, classes, def)} {...props}>
       {!!src ? image : children}
     </Center>
   );
@@ -119,12 +118,14 @@ export function Box({ children, ...props }) {
  *                                            Button
  ****************************************************************************************************/
 export function Button({ children, onClick, ...props }) {
+  const classes = { 'ui-control': !0 , button: !0 };
+  const def = { size: 'large', variant: 'outlined' } ;
   return (
     <Iw {...props}>
       <Center
         {...props}
-        className="ui ui-control button"
-        style={{ ...convertProps(props) }}
+        className={createClasses(props, classes, def)}
+        style={convertProps(props)}
         onClick={(e) => !props.disabled && onClick && onClick(e)}
       >
         {children}
@@ -165,10 +166,16 @@ export function Center({ children, ...props }) {
 /****************************************************************************************************
  *                                            Chip
  ****************************************************************************************************/
-export function Chip({ children, icon, ...props }) {
-  const variant = props.variant || 'outlined';
+export function Chip({ children, icon, ...props }) { 
   return (
-    <Center {...props} className={css({'ui-control': 1, chip: 1, [variant]: 1})}
+    <Center 
+    {...props} 
+      className={
+        createClasses(
+          props, {
+            'ui-control': 1, 
+            chip: 1
+          }, {variant: 'outlined'})}
        style={convertProps(props)}>
       {!!icon && <Box>{icon}</Box>}
       {children}
@@ -211,12 +218,14 @@ export function Dialog({
   height = "200px",
   ...props
 }) {
+  const style = {
+    "--dialog-width": width,
+    "--dialog-height": height,
+  }
   return (
-    <Iw {...props} width={width} height={height}>
-      <Backdrop open={open} onClose={onClose} />
-      {/* [[{JSON.stringify(css({ dialog: 1, open }, props.className))}]]
-      [[{props.className}]] */}
-      <Box className={css({ dialog: 1, open }, props.className)} {...props}>
+    <Iw {...props}>
+      <Backdrop open={open} onClose={onClose} /> 
+      <Box  style={style} className={css({ dialog: 1, open }, props.className)} {...props}>
         {children}
       </Box>
     </Iw>
@@ -461,9 +470,9 @@ export function Pagination({click, ...props}) {
 /****************************************************************************************************
  *                                            Select
  ****************************************************************************************************/
-export function Select({ options = [], value, label, ...props }) {
+export function SelectInner({ options = [], value, label, ...props }) {
   return (
-    <select style={convertProps(props)} {...props} className="select ui-input">
+    <select>
       <option>{label}</option>
       {options.map((o, i) => (
         <option selected={o === value} value={o}>
@@ -474,6 +483,13 @@ export function Select({ options = [], value, label, ...props }) {
   );
 }
 
+export function Select(props) {
+  const classes = { 'ui-input': 1, 'select': 1 };
+  const defaults = { color: 'default', size: 'medium' } ;
+  return <Tw selector="select" defaults={defaults}  {...props}
+        ><SelectInner {...props} /></Tw>
+}
+
 /****************************************************************************************************
  *                                          Snackbar
  ****************************************************************************************************/
@@ -482,12 +498,15 @@ export const Snackbar = ({
   open,
   where = "sw",
   onClose,
+  color = "info",
   ...props
 }) => {
+  const classes = { 'ui-text': 1, snackbar: 1, open, [where]: 1 };
+  const def = { color: 'info' } ;
   return (
     <Iw {...props}>
       <Backdrop open={open} onClose={onClose} />
-      <Box className={css({ 'ui-text': 1, snackbar: 1, open, [where]: 1 }, props.className)}>{children}</Box>
+      <Box style={convertProps({...props, color})}  className={createClasses(props, classes, def)}>{children}</Box>
     </Iw>
   );
 };
@@ -511,7 +530,7 @@ export function Spinner({ children, ...props }) {
  *                                           Stack
  ****************************************************************************************************/
 export const Stack = ({ children, ...props }) => (
-  <Flex column className="ui-text" style={convertProps(props)} {...props}>
+  <Flex column style={convertProps(props)} {...props}>
     {children}
   </Flex>
 );
@@ -520,11 +539,13 @@ export const Stack = ({ children, ...props }) => (
  *                                          Switch
  ****************************************************************************************************/
 export function Switch({ onChange, ...props }) {
+  const classes = { 'ui-control': 1, 'switch': 1 };
+  const def = { color: 'info', checked: !1 } ;
   return (
     <Iw {...props} variant="filled">
       <div
         onClick={() => onChange && !props.disabled && onChange(!props.checked)}
-        className="switch ui"
+        className={createClasses(props, classes, def)}
         style={convertProps(props)}
         {...props}
       >
@@ -539,7 +560,7 @@ export function Switch({ onChange, ...props }) {
 /****************************************************************************************************
  *                                           TextBox
  ****************************************************************************************************/
-export function TextBox({
+export function TextBoxInner({
   fullWidth,
   style,
   multiple,
@@ -561,6 +582,13 @@ export function TextBox({
   return <input {...args} />;
 }
 
+export function TextBox({label, ...props}) { 
+  const defaults = { color: 'default', size: 'medium' } ;
+  return <Tw defaults={defaults} {...props}
+        >{!!label&&<label>{label}</label>}
+        <TextBoxInner {...props} /></Tw>
+}
+
 /****************************************************************************************************
  *                                          Typography
  ****************************************************************************************************/
@@ -577,6 +605,16 @@ export function Typography({ variant = "body1", children, ...props }) {
     </Iw>
   );
 }
+
+
+function Tw({selector, defaults, children, ...props}) {
+  const classes = { 'ui-input': 1, [selector]: 1 }; 
+  return <Box  
+          style={convertProps(props)}
+          className={createClasses(props, classes, defaults)}
+        >{children}</Box>
+}
+
 
 function Iw({ inspect, children, ...props }) {
   if (inspect)

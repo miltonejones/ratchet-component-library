@@ -16,7 +16,7 @@ export default function useSnackbar() {
 
         setTimeout(() => {
           setState({ open: false });
-        }, 2999);
+        }, 29999);
       }),
     []
   );

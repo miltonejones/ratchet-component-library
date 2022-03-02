@@ -1,5 +1,5 @@
 body { 
-    --font-family: Lato, Roboto, Ariel;
+    --font-family: Lato, Roboto, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
   
     --card-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px -1px,
       rgba(0, 0, 0, 0.14) 0px 4px 5px 0px, rgba(0, 0, 0, 0.12) 0px 1px 10px 0px;
@@ -51,7 +51,7 @@ body {
 }
 
 
-.ui-control {
+.ui-control:not(.switch) {
   color: var(--control-fore-color);
   background-color: var(--control-back-color);
 }
@@ -63,12 +63,99 @@ body {
   color: var(--control-back-color);
   border-color: var(--control-back-color);
   background-color: transparent;
+  border-width: 1px;
+  border-style: solid;
 }
 
 .ui-plain {
-  color: var(--text-fore-color); 
+  color: var(--text-color); 
+  font-family: var(--font-family);
 }
+
 
 .ui-input {
   border-color: var(--text-fore-color); 
+  border-radius: 4px;
+  border-width: 1px;
+  border-style: solid;
+  height: fit-content;
+  position: relative;
 }
+
+.ui-input label {
+  position: absolute;
+  left: 8.5px;
+  top: -8px;
+  font-size: 0.7rem;
+  z-index: 2;
+  padding: 0;
+  background-color: white;
+  color: var(--text-fore-color); 
+  width: 0;
+  overflow: hidden;
+}
+
+.ui-input:focus-within { 
+  outline: solid 2px var(--text-fore-color); 
+}
+
+.ui-input:focus-within label{ 
+  padding: 0 4px;
+  width: inherit;
+}
+
+
+.ui-input input,
+.ui-input select,
+.ui-input textarea {
+  z-index: 1;
+  -webkit-appearance: none;
+  user-select: none;
+  box-sizing: content-box;
+  padding: 12.5px 14px;
+  font-size: 1rem;
+  border-width: 0px;
+  font-family: var(--font-family);
+  outline-width: 0px;
+}
+
+.ui-input.small input,
+.ui-input.small textarea { 
+  padding: 9px 14px;
+  font-size: 0.9rem; 
+}
+
+
+.ui-input input,
+.ui-input textarea,
+.ui-input input:active,
+.ui-input textarea:active,
+.ui-input input:focus,
+.ui-input textarea:focus, 
+.ui-input input:focus-visible,
+.ui-input textarea:focus-visible { 
+  outline-width: 0px;
+}
+
+.ui-base {
+  -webkit-appearance: none;
+  user-select: none;
+  cursor: pointer;
+  letter-spacing: inherit;
+  color: currentcolor;
+  box-sizing: content-box;
+  /* height: 1.1375em; */
+  /* -webkit-tap-highlight-color: transparent; */
+  min-width: 0px;
+  border-radius: 4px;
+  font: inherit;
+  border-width: 1px;
+  border-style: solid;
+  border-color: initial;
+  border-image: initial;
+  background: none;
+  margin: 0px;
+  padding: 12.5px 14px;
+  font-family: var(--font-family);
+}
+
