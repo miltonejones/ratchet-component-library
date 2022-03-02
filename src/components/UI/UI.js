@@ -13,6 +13,23 @@ import useComponentState from "./hooks/useComponentState";
 import usePagination from "./hooks/usePagination";
 import { AlertCircle, CheckCircle, AlertTriangle, Info, ChevronLeft, ChevronRight } from "../../icons";
 
+
+
+const createClasses = (props, classes, defaultValues) => {
+  // only values with defaults are picked up here
+  Object.keys(defaultValues).map(t => {
+    const prop =  props[t] || defaultValues[t]
+    // for boolean properties we want the key, 
+    // not the value as the className
+    const name = typeof prop !== 'boolean' ? prop : t; 
+    !!prop && Object.assign(classes, { [name]: !0 })
+  }) 
+  // return string with any user classes appended
+  return css(classes, props.className);
+}
+
+
+
 /****************************************************************************************************
  *                                          RACHET UI
  *                            a component library for the rest of us
@@ -61,20 +78,17 @@ export function Alert({ children, severity = "info", icon: Photo, ...props }) {
  *                                           AppBar
  ****************************************************************************************************/
 export function AppBar({ children,   ...props }) { 
+  const classes = { 'ui-control': !0 , 'app-bar': !0  };
+  const def = { variant: 'fixed', bottom: false } ;
   return (
-    <Flex align="center" className="ui ui-control app-bar" {...props}>
+    <Flex align="center" className={createClasses(props, classes, def)} {...props}>
       {children}
     </Flex>
   );
 }
-
-const createClasses = (props, classes, defaultValues) => {
-  Object.keys(defaultValues).map(t => {
-    const prop =  props[t] || defaultValues[t]
-    !!prop && Object.assign(classes, { [prop]: !0 })
-  })
-  defaultValues.hasOwnProperty('checked') && Object.assign(classes, { checked: props.checked })
-  return css(classes, props.className);
+ 
+export function BottomAppBar (props) {
+  return <AppBar bottom {...props} />
 }
 
 /****************************************************************************************************
@@ -444,7 +458,7 @@ export function Pagination({click, ...props}) {
           <ChevronLeft />
       </IconButton>
       <IconButton disabled={last} click={() => click(1)}>
-          <ChevronLeft />
+          <ChevronRight />
       </IconButton>
     </Flex>
   </Iw>
@@ -569,8 +583,10 @@ export function TextBoxInner({
   multiple,
   value,
   rows = 3,
+  setFocus,
   ...props
 }) {
+  const ref = React.useRef(null)
   const width = fullWidth ? "100%" : "inherit";
   const args = {
     className: "ui-input text-box",
@@ -579,17 +595,38 @@ export function TextBoxInner({
     style: { width, ...style, ...convertProps(props) },
     ...props,
   };
+  const onFocus = () =>  setFocus (true);
+  const onBlur = () =>  setFocus (false);
+  const onChange = React.useCallback((c) =>  setFocus (!!c.target.value?.length), []);
+  React.useEffect(() => {
+    const input = ref.current;
+    if (input) {
+      input.addEventListener('focus', onFocus)
+      input.addEventListener('blur', () => (!!input.value ? onFocus : onBlur)()) 
+      input.addEventListener('input', () => onChange) 
+    
+      return () => {
+         input.removeEventListener('focus', onFocus)
+         input.removeEventListener('blur', onBlur)
+      } 
+    }
+  }, [ref, onChange]);
+
   if (multiple) {
     return <textarea {...args}>{value}</textarea>;
   }
-  return <input {...args} />;
+  return <input ref={ref} {...args} />;
 }
 
-export function TextBox({label, ...props}) { 
+export function TextBox({label,  placeholder, ...props}) { 
+  const [focus, setFocus] = React.useState(false);
   const defaults = { color: 'default', size: 'medium', variant: 'standard' } ;
+  const labelText = placeholder && !focus ? placeholder : label;
+  const labelClass = css ({ focus, placeholder: placeholder && !focus });
+  const args = placeholder && focus ? { placeholder } : {}
   return <Tw defaults={defaults} {...props}
-        >{!!label&&<label>{label}</label>}
-        <TextBoxInner {...props} /></Tw>
+        >{!!label&&<label onClick={() => setFocus(!0)} className={labelClass}>{labelText}</label>}
+        <TextBoxInner setFocus={setFocus} {...props} {...args} /></Tw>
 }
 
 /****************************************************************************************************
@@ -644,16 +681,20 @@ function InspectorBody({ name, styles }) {
         {!!styles && (
           <List
             header={
-              <Stack>
+              <>
                 <Typography variant="subtitle" mb={2}>
                   Styles for &lt;{name} /&gt;
                 </Typography>
                 <TextBox
+                variant="outlined"
+                size="small"
+                label="Component Styles"
+                placeholder="Search by style name"
                   mb={2}
                   value={filterText}
                   onChange={(e) => setFilterText(e.target.value)}
                 />
-              </Stack>
+              </>
             }
             items={styles
               .filter((r) => !!r.value)

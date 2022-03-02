@@ -3,6 +3,7 @@ import {
   AppBar,
   Avatar, //
   Backdrop,
+  BottomAppBar,
   Box, //
   Button, //
   Card, //
@@ -39,6 +40,7 @@ export {
   AppBar,
   Avatar, //
   Backdrop,
+  BottomAppBar,
   Box, //
   Button, //
   Card, //

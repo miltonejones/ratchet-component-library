@@ -49,8 +49,6 @@ body {
   color: var(--text-fore-color);
   background-color: var(--text-back-color);
 }
-
-
 .ui-control:not(.switch) {
   color: var(--control-fore-color);
   background-color: var(--control-back-color);
@@ -111,17 +109,33 @@ body {
   padding: 0;
   background-color: white;
   color: var(--text-fore-color); 
-  width: 0;
   overflow: hidden;
+  width: 0;
+  transition: all 0.1s linear;
+}
+
+
+.ui-input label.placeholder {
+  background-color: transparent;
+  width: fit-content;
+  font-size: 1rem;
+  left: 12.5px;
+  top: 14px;
+  color: rgba(0,0,0,.5)
+}
+
+.ui-input.filled label {
+  background-color: transparent;
 }
 
 .ui-input:focus-within { 
   outline: solid 2px var(--text-fore-color); 
 }
 
+.ui-input label.focus:not(.placeholder),
 .ui-input:focus-within label{ 
   padding: 0 4px;
-  width: inherit;
+  width: fit-content;
 }
 
 .ui-input.filled:focus-within ,
@@ -164,25 +178,4 @@ body {
   outline-width: 0px;
 }
 
-.ui-base {
-  -webkit-appearance: none;
-  user-select: none;
-  cursor: pointer;
-  letter-spacing: inherit;
-  color: currentcolor;
-  box-sizing: content-box;
-  /* height: 1.1375em; */
-  /* -webkit-tap-highlight-color: transparent; */
-  min-width: 0px;
-  border-radius: 4px;
-  font: inherit;
-  border-width: 1px;
-  border-style: solid;
-  border-color: initial;
-  border-image: initial;
-  background: none;
-  margin: 0px;
-  padding: 12.5px 14px;
-  font-family: var(--font-family);
-}
-
+ 

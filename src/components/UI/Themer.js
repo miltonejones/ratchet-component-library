@@ -1,6 +1,7 @@
 import React from "react";
 import { css } from "./util";
 import cssValues from "./css-values";
+import cssColors from "./css-colors";
 import useInspector from "./hooks/useInspector";
 import useCollapse from "./hooks/useCollapse";
 import useThemer from "./useThemer";
@@ -9,8 +10,22 @@ const THEME_SPACING = 4;
 
 const copy = (a, b) => Object.assign(a, b);
 
-const proper = (value) => (isNaN(value) ? value : `${value * THEME_SPACING}px`);
+const proper = (value) => (isNaN(value) ? decolor(value) : `${value * THEME_SPACING}px`);
  
+const decolor = value => {
+  if (value.indexOf('.') > 0) {
+    const parts = value.split('.');
+    const opacity = parts[1] / 1000;
+    const hexes = cssColors[parts[0]];
+    if (hexes) {
+      const r = parseInt(hexes.substr(1, 2), 16)
+      const g = parseInt(hexes.substr(3, 2), 16)
+      const b = parseInt(hexes.substr(5, 2), 16)
+      return `rgba(${r}, ${g}, ${b}, ${opacity})`
+    }
+  }
+  return value;
+}
 
 const convertProps = (props) =>
   ((o) => {
@@ -20,7 +35,6 @@ const convertProps = (props) =>
     !!props?.sx && copy(o, props.sx);
     !!props && console.log(JSON.stringify(props, 0, 2))
     !!props && [props.color||'primary', props.severity].map(hue => {
-      
       !!hue && copy(o, {
         '--text-fore-color': `var(--color-control-back-${hue})`,
         '--text-back-color': `var(--color-text-back-${hue})`,
