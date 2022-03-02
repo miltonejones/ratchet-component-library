@@ -1,12 +1,25 @@
 import { Canvas, Meta, Story, ArgsTable } from "@storybook/addon-docs";
 import DialogStory from "./DialogStory.js";
 import SnackbarStory from "./SnackbarStory.js";
-import { Alert } from "../../components/UI/UI.js";
+import { Alert, Stack } from "../../components/UI/UI.js";
+import { textHue } from './ArgTypes.js';
 
 <Meta title="Components/FEEDBACK" />
 
 export const DialogTemplate = (args) => <DialogStory {...args} />;
 export const SnackbarTemplate = (args) => <SnackbarStory {...args} />;
+export const AlertTemplate = (args) => <Stack> <Alert id="Info" severity="info" mb={2}>
+      This is an Info Alert.
+    </Alert>
+    <Alert id="Warning" severity="warning" mb={2}>
+      This is a Warning Alert.
+    </Alert>
+    <Alert id="Success" severity="success" mb={2}>
+      This is a Success Alert.
+    </Alert>
+    <Alert id="error" {...args} mb={2}>
+      Specimen: {args.severity} Alert.
+    </Alert></Stack>;
 
 # Alert
 
@@ -18,9 +31,10 @@ in a way that attracts the user's attention without interrupting the user's task
     name="Alert"
     argTypes={{
       severity: {
-        control: "text",
+        control: "radio",
         defaultValue: "info",
         description: "Sets the type of alert to display",
+        options: textHue
       },
       children: {
         control: "text",
@@ -28,25 +42,19 @@ in a way that attracts the user's attention without interrupting the user's task
         description: "Content of the alert body",
       },
     }}
+    args={{
+      severity: 'error'
+    }}
   >
-    <Alert id="Info" severity="info" mb={2}>
-      This is an Info Alert.
-    </Alert>
-    <Alert id="Warning" severity="warning" mb={2}>
-      This is a Warning Alert.
-    </Alert>
-    <Alert id="Success" severity="success" mb={2}>
-      This is a Success Alert.
-    </Alert>
-    <Alert id="error" severity="error" mb={2}>
-      This is a Error Alert.
-    </Alert>
+    {AlertTemplate.bind({})}
   </Story>
 </Canvas>
 
 ```jsx
 <Alert severity="warning">This is a Warning Alert.</Alert>
 ```
+
+## Alert properties
 
 <ArgsTable story="Alert" />
 
@@ -58,8 +66,8 @@ Dialogs inform users about a task and can contain critical information, require 
   <Story
     argTypes={{
       open: {
-        control: "text",
-        defaultValue: "info",
+        control: "boolean",
+        defaultValue: false,
         description: "Sets whether Dialog is open",
       },
       width: {
@@ -72,8 +80,7 @@ Dialogs inform users about a task and can contain critical information, require 
         defaultValue: "200px",
         description: "Height of the dialog",
       },
-      onClose: {
-        control: "text",
+      onClose: { 
         defaultValue: "",
         description:
           "Method to call when dialog Backdrop is clicked or a Cancel action is taken.",
@@ -85,6 +92,9 @@ Dialogs inform users about a task and can contain critical information, require 
       },
     }}
     name="Dialog"
+    args={{
+      open: false
+    }}
     parameters={{ layout: "fullscreen" }}
   >
     {DialogTemplate.bind({})}
@@ -118,9 +128,15 @@ Snackbars provide brief notifications. The component is also known as a toast.
   <Story
     argTypes={{
       open: {
-        control: "text",
-        defaultValue: "info",
+        control: "boolean",
+        defaultValue: false,
         description: "Sets whether Snackbar is open",
+      },
+      where: {
+        control: "radio",
+        defaultValue: "ne",
+        description: "Sets where the snackbar should appear",
+        options: ['nw','ne','se','sw']
       },
       onClose: {
         control: "text",
@@ -135,6 +151,9 @@ Snackbars provide brief notifications. The component is also known as a toast.
       },
     }}
     name="Snackbar"
+    args={{
+      where: 'ne'
+    }}
     parameters={{ layout: "fullscreen" }}
   >
     {SnackbarTemplate.bind({})}
@@ -146,3 +165,7 @@ Snackbars provide brief notifications. The component is also known as a toast.
   This is the snackbar
 </Snackbar>
 ```
+
+## Snackbar Properties
+
+<ArgsTable story="Snackbar" />

@@ -10,11 +10,11 @@ import {
   Spacer,
 } from "../../components/UI/UI.js";
 
-export default function DialogStory() {
-  const [open, setOpen] = React.useState(false);
+export default function DialogStory(args) {
+  const [open, setOpen] = React.useState(args.open);
   return (
     <Center mt={12}>
-      <Dialog onClose={() => setOpen(!open)} open={open}>
+      <Dialog onClose={() => setOpen(!open)} open={open || args.open} >
         <Stack>
           <Typography variant="h2">Some stuff in here</Typography>
           <Divider />

@@ -59,6 +59,11 @@ body {
   color: #fff; 
   background-color:  var(--control-back-color);
 }
+.ui-control.standard {
+  background-color: transparent;
+  color: var(--control-back-color);
+  border-width: 0;
+}
 .ui-control.outlined {
   color: var(--control-back-color);
   border-color: var(--control-back-color);
@@ -80,6 +85,21 @@ body {
   border-style: solid;
   height: fit-content;
   position: relative;
+}
+
+.ui-input.standard { 
+  border-radius: 0;
+  border-width: 0;
+  border-bottom-width: 1px;
+  border-bottom-color: var(--text-fore-color); 
+}
+
+.ui-input.filled {  
+  border-radius: 4px 4px 0 0;
+  background-color: rgba(0, 0, 0, 0.08);
+  border-width: 0;
+  border-bottom-width: 1px;
+  border-bottom-color: var(--text-fore-color); 
 }
 
 .ui-input label {
@@ -104,6 +124,12 @@ body {
   width: inherit;
 }
 
+.ui-input.filled:focus-within ,
+.ui-input.standard:focus-within {  
+  outline: none;
+  border-bottom-width: 2px; 
+}
+
 
 .ui-input input,
 .ui-input select,
@@ -117,6 +143,7 @@ body {
   border-width: 0px;
   font-family: var(--font-family);
   outline-width: 0px;
+  background-color: transparent;
 }
 
 .ui-input.small input,

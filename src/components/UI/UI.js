@@ -11,7 +11,7 @@ import {
 } from "./Themer";
 import useComponentState from "./hooks/useComponentState";
 import usePagination from "./hooks/usePagination";
-import { AlertCircle, CheckCircle, AlertTriangle, Info,ChevronLeft,ChevronRight } from "../../icons";
+import { AlertCircle, CheckCircle, AlertTriangle, Info, ChevronLeft, ChevronRight } from "../../icons";
 
 /****************************************************************************************************
  *                                          RACHET UI
@@ -168,14 +168,14 @@ export function Center({ children, ...props }) {
  ****************************************************************************************************/
 export function Chip({ children, icon, ...props }) { 
   return (
-    <Center 
+    <Center
     {...props} 
       className={
         createClasses(
           props, {
             'ui-control': 1, 
             chip: 1
-          }, {variant: 'outlined'})}
+          }, {variant: 'outlined', size: 'small'})}
        style={convertProps(props)}>
       {!!icon && <Box>{icon}</Box>}
       {children}
@@ -368,12 +368,13 @@ export function Inspector({ children, ...props }) {
 /****************************************************************************************************
  *                                            List
  ****************************************************************************************************/
-export function List({ items, children, dense, header, footer, ...props }) {
+export function List({ items, children, dense = false, header, footer, ...props }) {
+  const classes = { list: 1, dense }
   return (
     <ul
-      className={css({ list: 1, dense }, props.className)}
-      {...props}
-      style={convertProps(props)}
+     {...props}
+      className={createClasses(props, classes, { dense: false  })}
+      style={convertProps({props})}
     >
       {!!header && <li>{header}</li>}
       {items?.map((item, i) => (
@@ -503,6 +504,7 @@ export const Snackbar = ({
 }) => {
   const classes = { 'ui-text': 1, snackbar: 1, open, [where]: 1 };
   const def = { color: 'info' } ;
+ 
   return (
     <Iw {...props}>
       <Backdrop open={open} onClose={onClose} />
@@ -526,6 +528,7 @@ export function Spinner({ children, ...props }) {
     </Center>
   );
 }
+
 /****************************************************************************************************
  *                                           Stack
  ****************************************************************************************************/
@@ -583,7 +586,7 @@ export function TextBoxInner({
 }
 
 export function TextBox({label, ...props}) { 
-  const defaults = { color: 'default', size: 'medium' } ;
+  const defaults = { color: 'default', size: 'medium', variant: 'standard' } ;
   return <Tw defaults={defaults} {...props}
         >{!!label&&<label>{label}</label>}
         <TextBoxInner {...props} /></Tw>
@@ -592,13 +595,15 @@ export function TextBox({label, ...props}) {
 /****************************************************************************************************
  *                                          Typography
  ****************************************************************************************************/
-export function Typography({ variant = "body1", children, ...props }) {
+export function Typography({  children, ...props }) {
+  const classes = { 'ui-plain': 1, typo: 1 };
+  const defaults = {variant: 'body1' } 
   return (
     <Iw {...props}>
       <div
-        style={convertProps({...props, variant})}
+        style={convertProps(props)}
         {...props}
-        className={css({ 'ui-plain': 1, typo: 1, [variant]: 1, [props.className]: 1 }, props.className)}
+        className={createClasses(props, classes, defaults)}
       >
         {children}
       </div>
@@ -607,6 +612,7 @@ export function Typography({ variant = "body1", children, ...props }) {
 }
 
 
+// Text Wrapper
 function Tw({selector, defaults, children, ...props}) {
   const classes = { 'ui-input': 1, [selector]: 1 }; 
   return <Box  
@@ -615,7 +621,7 @@ function Tw({selector, defaults, children, ...props}) {
         >{children}</Box>
 }
 
-
+// Inspection Wrapper
 function Iw({ inspect, children, ...props }) {
   if (inspect)
     return (

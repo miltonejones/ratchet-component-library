@@ -18,7 +18,7 @@ const convertProps = (props) =>
       .filter((key) => props.hasOwnProperty(key))
       .map((key) => copy(o, { [cssValues[key]]: proper(props[key]) }));
     !!props?.sx && copy(o, props.sx);
-    !!props && console.log({props})
+    !!props && console.log(JSON.stringify(props, 0, 2))
     !!props && [props.color||'primary', props.severity].map(hue => {
       
       !!hue && copy(o, {
